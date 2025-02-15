@@ -13,11 +13,11 @@ class Ball:
     def apply_force(self, dt):
         #self.acc += force / self.mass
      
-        self.acc = self.acc + np.array([0, 9.81]) / dt #gravity
+        self.acc = self.acc + np.array([0, 9.81]) * dt #gravity
 
-    def update(self):
-        self.vel = self.vel + self.acc
-        self.pos = self.pos + self.vel + 0.5 * self.acc
+    def update(self, dt):
+        self.vel = self.vel + self.acc * dt
+        self.pos = self.pos + self.vel * dt + 0.5 * (self.acc ** dt)
         self.acc = np.array([0, 0])
         if (self.pos[1] > 600 - self.radius):
             self.vel = 0.99 * self.vel

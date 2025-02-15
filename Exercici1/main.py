@@ -21,10 +21,10 @@ while running:
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("black")
-
+    dt = clock.tick(frames) / 100
     # RENDER YOUR GAME HERE
-    ball.apply_force()
-    ball.update(frames)
+    ball.apply_force(dt)
+    ball.update(dt)
     ball.draw(screen)
     
 
