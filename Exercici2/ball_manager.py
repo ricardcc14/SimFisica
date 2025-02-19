@@ -14,7 +14,7 @@ class Ball_Manager:
         ball = Ball(self.balls_radius, self.balls_mass, mouse_end_pos)
 
         #Calculate applied force 
-        force_vector = np.abs(np.array(mouse_end_pos) - np.array(mouse_start_pos))
+        force_vector = 1000*(np.array(mouse_end_pos) - np.array(mouse_start_pos))
 
         #Apply new force
         ball.apply_force(force_vector)
@@ -24,7 +24,7 @@ class Ball_Manager:
 
     def renderAllBalls(self, dt, screen):
         for ball in self.balls:
-            ball.apply_force([0, 0])
+            ball.checkScreenEdges(screen)
             ball.update(dt)
             ball.draw(screen)
 

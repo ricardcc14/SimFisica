@@ -12,7 +12,9 @@ running = True
 frames = 60
 
 #Our setup: Create a ball manager
-ball_manager = Ball_Manager(10, 50)
+ball_manager = Ball_Manager(60, 100)
+mouse_start_pos = (0, 0)
+mouse_end_pos = (0, 0)
 
 while running:
     # poll for events
@@ -26,11 +28,9 @@ while running:
             mouse_end_pos = event.pos
             ball_manager.addBallWithAppliedForce(mouse_start_pos, mouse_end_pos)
 
-
-
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("black")
-    dt = clock.tick(frames) / 1000
+    dt = clock.tick(frames) / 100
 
     # RENDER YOUR GAME HERE
     ball_manager.renderAllBalls(dt, screen)

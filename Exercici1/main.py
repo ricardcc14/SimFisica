@@ -10,7 +10,8 @@ running = True
 frames = 60
 
 #Our setup Create a ball
-ball = Ball(50, 100, [400, 300])
+ball = Ball(80, 500, [400, 300])
+ball.apply_force([0,0])
 
 while running:
     # poll for events
@@ -21,10 +22,10 @@ while running:
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("black")
-    dt = clock.tick(frames) / 1000
+    dt = clock.tick(frames) / 100
 
     # RENDER YOUR GAME HERE
-    ball.apply_force([0,0])
+    ball.checkScreenEdges(screen)
     ball.update(dt)
     ball.draw(screen)
 
