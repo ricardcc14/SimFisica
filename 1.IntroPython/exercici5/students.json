@@ -1,0 +1,142 @@
+[
+    {
+        "id": 1,
+        "name": "Nettie",
+        "subjects": [
+            {
+                "class": "Maths",
+                "grade": 2.2
+            },
+            {
+                "class": "Programming",
+                "grade": 1.7
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Jesus",
+        "subjects": [
+            {
+                "class": "Maths",
+                "grade": 3.4
+            },
+            {
+                "class": "Programming",
+                "grade": 4.5
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Helen",
+        "subjects": [
+            {
+                "class": "Maths",
+                "grade": 4.8
+            },
+            {
+                "class": "Programming",
+                "grade": 5
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Kyle",
+        "subjects": [
+            {
+                "class": "Maths",
+                "grade": 8.6
+            },
+            {
+                "class": "Programming",
+                "grade": 7.8
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Mary",
+        "subjects": [
+            {
+                "class": "Maths",
+                "grade": 9.2
+            },
+            {
+                "class": "Programming",
+                "grade": 9.9
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Clayton",
+        "subjects": [
+            {
+                "class": "Maths",
+                "grade": 7.2
+            },
+            {
+                "class": "Programming",
+                "grade": 5.9
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Susan",
+        "subjects": [
+            {
+                "class": "Maths",
+                "grade": 1.7
+            },
+            {
+                "class": "Programming",
+                "grade": 3.8
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "name": "Douglas",
+        "subjects": [
+            {
+                "class": "Maths",
+                "grade": 5.5
+            },
+            {
+                "class": "Programming",
+                "grade": 6.5
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "name": "Helen",
+        "subjects": [
+            {
+                "class": "Maths",
+                "grade": 6.6
+            },
+            {
+                "class": "Programming",
+                "grade": 7
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "name": "Lillie",
+        "subjects": [
+            {
+                "class": "Maths",
+                "grade": 0.5
+            },
+            {
+                "class": "Programming",
+                "grade": 1.7
+            }
+        ]
+    }
+]
