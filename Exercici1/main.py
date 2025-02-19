@@ -8,6 +8,7 @@ screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
 running = True
 frames = 60
+factor = 5
 
 #Our setup Create a ball
 ball = Ball(80, 500, [400, 300])
@@ -22,11 +23,10 @@ while running:
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("black")
-    dt = clock.tick(frames) / 100
 
     # RENDER YOUR GAME HERE
     ball.checkScreenEdges(screen)
-    ball.update(dt)
+    ball.update(factor/frames)
     ball.draw(screen)
 
     # flip() the display to put your work on screen

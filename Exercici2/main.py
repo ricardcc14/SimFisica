@@ -12,9 +12,10 @@ running = True
 frames = 60
 
 #Our setup: Create a ball manager
-ball_manager = Ball_Manager(60, 100)
+ball_manager = Ball_Manager(30, 100)
 mouse_start_pos = (0, 0)
 mouse_end_pos = (0, 0)
+factor = 5
 
 while running:
     # poll for events
@@ -30,10 +31,9 @@ while running:
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("black")
-    dt = clock.tick(frames) / 100
 
     # RENDER YOUR GAME HERE
-    ball_manager.renderAllBalls(dt, screen)
+    ball_manager.renderAllBalls(factor/frames, screen)
 
     # flip() the display to put your work on screen
     pygame.display.flip()
