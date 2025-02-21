@@ -14,18 +14,21 @@ factor = 5
 
 #Our setup Create a ball
 ball = Ball(40, 100, [400, 300])
-ball.apply_force([0,0])
+
+font = pygame.font.SysFont("Arial", 20)
+kinetic_title = font.render('Energia Cinètica', True, "orange")
+potential_title = font.render('Energia Potencial', True, "yellow")
+mechanical_title = font.render('Energia Mecànica', True, "red")
+
 
 def display_energy_bars(ball, screen):
     kinetic = ball.get_kinetic_energy()
     potential = ball.get_potential_energy(screen)
     mechanic = kinetic + potential
-    print(str(mechanic))
 
-    pygame.draw.rect(screen, "orange", pygame.Rect(30, 30, kinetic[1] / (screen.get_width()), 30), border_radius=5)
-    pygame.draw.rect(screen, "yellow", pygame.Rect(30, 65, potential[1] / (screen.get_width()), 30), border_radius=5)
-    pygame.draw.rect(screen, "red", pygame.Rect(30, 100, mechanic[1] / (screen.get_width()), 30), border_radius=5)
-
+    pygame.draw.rect(screen, "orange", pygame.Rect(180, 30, kinetic[1] / (screen.get_width()), 30), border_radius=5)
+    pygame.draw.rect(screen, "yellow", pygame.Rect(180, 65, potential[1] / (screen.get_width()), 30), border_radius=5)
+    pygame.draw.rect(screen, "red", pygame.Rect(180, 100, mechanic[1] / (screen.get_width()), 30), border_radius=5)
 
 
 while running:
@@ -42,6 +45,10 @@ while running:
     ball.checkScreenEdges(screen)
     ball.update(factor/frames)
     ball.draw(screen)
+
+    screen.blit(kinetic_title, (30, 30))
+    screen.blit(potential_title, (30, 65))
+    screen.blit(mechanical_title, (30, 100))
 
     display_energy_bars(ball, screen)
 
