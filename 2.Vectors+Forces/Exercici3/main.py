@@ -13,7 +13,7 @@ running = True
 gravity = np.array([0, -9.8])
 coef = 0.5
 angle = np.pi / 6
-factor = 1
+factor = 5
 
 ball = Ball(radius=25, mass=10, position=np.array([100, 429], dtype=np.float64))
 

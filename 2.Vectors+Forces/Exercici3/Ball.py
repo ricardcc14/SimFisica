@@ -13,7 +13,7 @@ class Ball:
     def update(self, dt):
         self.velocity = self.velocity + self.acceleration * dt
         self.position = self.position + self.velocity * dt + 0.5 * (self.acceleration * np.power(dt,2))
-        self.acc = np.array([0, 0])
+        self.acceleration = np.array([0, 0])
         pass
 
     def draw(self, screen:pygame.Surface):
