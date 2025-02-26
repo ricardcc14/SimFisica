@@ -13,13 +13,12 @@ frames = 60
 factor = 5
 
 #Our setup Create a ball
-ball = Ball(40, 100, [400, 300])
+ball = Ball(40, 100, [400.0, 300.0])
 
 font = pygame.font.SysFont("Arial", 20)
 kinetic_title = font.render('Energia Cinètica', True, "orange")
 potential_title = font.render('Energia Potencial', True, "yellow")
 mechanical_title = font.render('Energia Mecànica', True, "red")
-
 
 def display_energy_bars(ball, screen):
     kinetic = ball.get_kinetic_energy()

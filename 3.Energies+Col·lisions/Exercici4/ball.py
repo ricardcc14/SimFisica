@@ -120,3 +120,13 @@ class Ball:
         if (self.pos[0] > screen.get_width() - self.radius):
             self.vel[0] = -self.vel[0]
             self.pos[0] = screen.get_width() - self.radius
+
+
+
+    def apply_normal_and_friction_force(self, inclination, coef):
+        N = -(self.gravity[1] * self.mass * np.cos(inclination))
+    
+        self.apply_force([-coef * N * -self.vel[0], -coef * N * -self.vel[1]])
+        
+        pass
+    

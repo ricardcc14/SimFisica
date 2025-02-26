@@ -32,14 +32,7 @@ class Ball:
         return energy
         
     def collision_ball(self, other_ball):
-
-        #Trobar els vectors unitaris de l'eix de xoc
-        u = np.array(other_ball.pos - self.pos) / np.linalg.norm(other_ball.pos - self.pos)
-
-        #Distància de seguretat
-        if (np.abs(np.linalg.norm(other_ball.pos - self.pos)) <= (self.radius + other_ball.radius)):
-            self.pos = self.pos + 1.1*(-u * ((self.radius + other_ball.radius) - np.linalg.norm(other_ball.pos - self.pos)))
-
+        
         #Trobar els vectors unitaris de l'eix de xoc
         u = np.array(other_ball.pos - self.pos) / np.linalg.norm(other_ball.pos - self.pos)
         print("U: "+str(u))
@@ -50,19 +43,15 @@ class Ball:
         print("Vel 1: "+str(self.vel))
         print("Vel 2: "+str(other_ball.vel))
 
-        if np.linalg.norm(self.vel) > 0 and np.linalg.norm(other_ball.pos) > 0:
-            theta = np.arccos(np.dot(u, self.vel) / (np.linalg.norm(self.vel) * np.linalg.norm(u)))
-            if (np.cross(u, self.vel) < 0):
-                theta = -theta
+        if np.linalg.norm(self.vel) > 0:
+            theta = np.arccos(np.dot(self.vel, u) / (np.linalg.norm(self.vel) * np.linalg.norm(u)))
         else:
             theta = 0
 
         print("Theta: "+str(theta))
 
-        if (np.linalg.norm(other_ball.vel) > 0) and np.linalg.norm(other_ball.pos) > 0:
-            phi = np.arccos(np.dot(u, other_ball.vel) / (np.linalg.norm(other_ball.vel) * np.linalg.norm(u)))
-            if (np.cross(u, other_ball.vel) < 0):
-                phi = -phi
+        if np.linalg.norm(other_ball.vel) > 0:
+            phi = np.arccos(np.dot(other_ball.vel, -u) / (np.linalg.norm(other_ball.vel) * np.linalg.norm(u)))
         else:
             phi = 0
 
@@ -75,8 +64,8 @@ class Ball:
         vel_i_1_u = np.linalg.norm(self.vel) * np.cos(theta)
         vel_i_1_w = np.linalg.norm(self.vel) * np.sin(theta)
 
-        vel_i_2_u = np.linalg.norm(other_ball.vel) * np.cos(phi)
-        vel_i_2_w = np.linalg.norm(other_ball.vel) * np.sin(phi)
+        vel_i_2_u = -np.linalg.norm(other_ball.vel) * np.cos(phi)
+        vel_i_2_w = -np.linalg.norm(other_ball.vel) * np.sin(phi)
         
  
         print("Vel_i_1_u: "+str(vel_i_1_u))
@@ -91,11 +80,14 @@ class Ball:
         print("X_1: "+str(x_1))
         print("X_2: "+str(x_2))
         
+
         self.vel = x_1 * u +  vel_i_1_w * w
         other_ball.vel = x_2 * u + vel_i_2_w * w
 
         print("VEL FINAL 1: "+str(self.vel))
         print("VEL FINAL 2: "+str(other_ball.vel))
+
+
 
     def draw(self, screen):
         pygame.draw.circle(screen, self.color, self.pos, self.radius)

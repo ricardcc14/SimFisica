@@ -13,6 +13,7 @@ class Ball_Manager:
                 ball.checkScreenEdges(screen)
                 self.check_collision()
                 ball.update(dt)
+                ball.apply_normal_and_friction_force(0, 0.01)
                 ball.draw(screen)
 
         else:

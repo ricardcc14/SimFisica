@@ -16,9 +16,8 @@ class Ball:
     def update(self, dt):
         self.acc = self.acc + self.gravity
         self.vel = self.vel + self.acc * dt
-        self.pos = self.pos + self.vel * dt + 0.5 * (self.acc * np.power(dt,2))
+        self.pos = self.pos + self.vel * dt #+ 0.5 * (self.acc * np.power(dt,2))
         self.acc = np.array([0, 0])
-
 
     def get_kinetic_energy(self): 
         energy = np.array([0, 0])
@@ -27,7 +26,7 @@ class Ball:
 
     def get_potential_energy(self, screen:pygame.Surface):
         energy = np.array([0, 0])
-        energy = self.mass * self.gravity * (screen.get_height() - self.pos)
+        energy = self.mass * self.gravity * (screen.get_height() - self.radius - self.pos[1])
         return energy
         
     def draw(self, screen):
