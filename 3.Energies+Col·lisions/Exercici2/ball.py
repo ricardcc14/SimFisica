@@ -35,67 +35,18 @@ class Ball:
 
         #Trobar els vectors unitaris de l'eix de xoc
         u = np.array(other_ball.pos - self.pos) / np.linalg.norm(other_ball.pos - self.pos)
+        w = np.array([-u[1], u[0]])
 
         #Distància de seguretat
         if (np.abs(np.linalg.norm(other_ball.pos - self.pos)) <= (self.radius + other_ball.radius)):
             self.pos = self.pos + 1.1*(-u * ((self.radius + other_ball.radius) - np.linalg.norm(other_ball.pos - self.pos)))
 
-        #Trobar els vectors unitaris de l'eix de xoc
-        u = np.array(other_ball.pos - self.pos) / np.linalg.norm(other_ball.pos - self.pos)
-        print("U: "+str(u))
-        w = np.array([-u[1], u[0]])
-        print("W: "+str(w))
-
-        #Calcular angles per les projeccions
-        print("Vel 1: "+str(self.vel))
-        print("Vel 2: "+str(other_ball.vel))
-
-        if np.linalg.norm(self.vel) > 0 and np.linalg.norm(other_ball.pos) > 0:
-            theta = np.arccos(np.dot(u, self.vel) / (np.linalg.norm(self.vel) * np.linalg.norm(u)))
-            if (np.cross(u, self.vel) < 0):
-                theta = -theta
-        else:
-            theta = 0
-
-        print("Theta: "+str(theta))
-
-        if (np.linalg.norm(other_ball.vel) > 0) and np.linalg.norm(other_ball.pos) > 0:
-            phi = np.arccos(np.dot(u, other_ball.vel) / (np.linalg.norm(other_ball.vel) * np.linalg.norm(u)))
-            if (np.cross(u, other_ball.vel) < 0):
-                phi = -phi
-        else:
-            phi = 0
-
-        print("Phi: "+str(phi))
-
-        #Calcular canvi de base
-        vel_i_1 = np.linalg.norm(self.vel) * np.cos(theta) * u + np.linalg.norm(self.vel) * np.sin(theta) * w
-        vel_i_2 = np.linalg.norm(other_ball.vel) * np.cos(phi) * u + np.linalg.norm(other_ball.vel) * np.sin(phi) * w
-
-        vel_i_1_u = np.linalg.norm(self.vel) * np.cos(theta)
-        vel_i_1_w = np.linalg.norm(self.vel) * np.sin(theta)
-
-        vel_i_2_u = np.linalg.norm(other_ball.vel) * np.cos(phi)
-        vel_i_2_w = np.linalg.norm(other_ball.vel) * np.sin(phi)
-        
- 
-        print("Vel_i_1_u: "+str(vel_i_1_u))
-        print("Vel_i_1_w: "+str(vel_i_1_w))
-        print("Vel_i_2_u: "+str(vel_i_2_u))
-        print("Vel_i_2_2: "+str(vel_i_2_w))
-
         #Calcular velocitats finals amb nova base
-        x_1 = ((self.mass - other_ball.mass) / (self.mass + other_ball.mass)) * vel_i_1_u + ((2 * other_ball.mass)/(self.mass + other_ball.mass)) * vel_i_2_u
-        x_2 =  ((2 * self.mass) / (self.mass + other_ball.mass)) * vel_i_1_u + ((other_ball.mass - self.mass) / (self.mass + other_ball.mass)) * vel_i_2_u
+        x_1 = ((self.mass - other_ball.mass) / (self.mass + other_ball.mass)) * self.vel + ((2 * other_ball.mass)/(self.mass + other_ball.mass)) * other_ball.vel
+        x_2 =  ((2 * self.mass) / (self.mass + other_ball.mass)) * self.vel + ((other_ball.mass - self.mass) / (self.mass + other_ball.mass)) * other_ball.vel
         
-        print("X_1: "+str(x_1))
-        print("X_2: "+str(x_2))
-        
-        self.vel = x_1 * u +  vel_i_1_w * w
-        other_ball.vel = x_2 * u + vel_i_2_w * w
-
-        print("VEL FINAL 1: "+str(self.vel))
-        print("VEL FINAL 2: "+str(other_ball.vel))
+        self.vel = x_1 * u +  self.vel * w
+        other_ball.vel = x_2 * u + other_ball.vel * w
 
     def draw(self, screen):
         pygame.draw.circle(screen, self.color, self.pos, self.radius)
@@ -120,3 +71,9 @@ class Ball:
         if (self.pos[0] > screen.get_width() - self.radius):
             self.vel[0] = -self.vel[0]
             self.pos[0] = screen.get_width() - self.radius
+
+    def apply_normal_and_friction_force(self, inclination, coef):
+        N = -(self.gravity[1] * self.mass * np.cos(inclination))
+        self.apply_force([-coef * N * -self.vel[0], -coef * N * -self.vel[1]])
+        pass
+    

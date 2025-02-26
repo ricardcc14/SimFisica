@@ -21,7 +21,7 @@ font = pygame.font.SysFont("Arial", 20)
 ui_title = font.render('Press to start!', True, "white")
 
 # Create ball with applied force
-ball = Ball(40, 100, np.array([350, 300]), 'white')
+ball = Ball(40, 100, np.array([350, 350]), 'white')
 
 # Create static ball
 ball2 = Ball(40, 50, np.array([600, 300]), 'black')

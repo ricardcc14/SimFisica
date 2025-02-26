@@ -13,7 +13,6 @@ class Ball_Manager:
                 ball.checkScreenEdges(screen)
                 self.check_collision()
                 ball.update(dt)
-                ball.apply_normal_and_friction_force(0, 0.01)
                 ball.draw(screen)
 
         else:
@@ -33,7 +32,6 @@ class Ball_Manager:
         
                 if distance <= sum_radi:
                     ball1.collision_ball(ball2)
-                    print("Collision!!")
                         
 
 
