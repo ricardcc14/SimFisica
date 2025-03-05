@@ -21,9 +21,6 @@ class Ball:
         self.acc = self.acc + (np.array(force) / self.mass)
 
     def update(self, dt):
-        #self.acc = self.acc + self.gravity
-        #self.vel = self.vel + self.acc * dt
-        #self.pos = self.pos + self.vel * dt + 0.5 * (self.acc * np.power(dt,2))
         self.angular_vel += self.angular_acc * dt
         if self.angular_vel > (4 * np.pi):
             self.angular_vel = 4 * np.pi

@@ -9,20 +9,24 @@ class Ball:
         self.pos = np.array(pos_initial)
         self.vel = np.array(np.zeros(2))
         self.acc = np.array(np.zeros(2))
-        self.gravity = np.array([0, 9.81])
+        self.gravity = 9.81
 
         #Paràmetres pel moviment angular
-        self.radius_rotation = 100
+        self.radius_rotation = 300
         self.theta = 60.0 * np.pi / 180.0
         self.angular_vel = 0.0
+
         self.angular_acc = 0.0
+        self.acc_tang = 0.0
+        self.acc_cent = 0.0
 
     def apply_force(self, force):     
         self.acc = self.acc + (np.array(force) / self.mass)
 
-    def update(self, dt):
-        
-        self.angular_acc = - (self.gravity[1] / self.radius_rotation) * np.sin(self.theta)
+    def update(self, dt, screen):
+
+        self.acc_tang = -self.gravity * np.sin(self.theta)
+        self.angular_acc = self.acc_tang / self.radius_rotation
 
         # Actualització de la velocitat angular
         self.angular_vel += self.angular_acc * dt
@@ -32,11 +36,10 @@ class Ball:
 
         # Càlcul de la posició respectant theta
         self.pos = np.array([
-            400 + self.radius_rotation * np.sin(self.theta),  # X
-            450 + self.radius_rotation * np.cos(self.theta)   # Y
+            screen.get_width()/2 + self.radius_rotation * np.sin(self.theta),  # X
+            screen.get_height()/4  + self.radius_rotation * np.cos(self.theta)   # Y
         ])
-        
-
+    
 
     def get_kinetic_energy(self): 
         energy = np.array([0, 0])
@@ -67,7 +70,7 @@ class Ball:
 
     def draw(self, screen):
         # Draw de la corda
-        pygame.draw.line(screen, "black", (400, 150), self.pos, 2)
+        pygame.draw.line(screen, "black", (screen.get_width()/2, screen.get_width()/4), self.pos, 2)
 
         # Draw de la pilota
         pygame.draw.circle(screen, self.color, self.pos, self.radius)

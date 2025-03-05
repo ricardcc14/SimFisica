@@ -19,8 +19,7 @@ font = pygame.font.SysFont("Arial", 20)
 ui_title = font.render('Press to start!', True, "white")
 
 # Create ball with applied force
-ball = Ball(25, 10, np.array([400, 300]), 'white')
-
+ball = Ball(40, 10, np.array([0, 0]), 'white')
 
 while running:
     # poll for events
@@ -35,12 +34,8 @@ while running:
 
     # RENDER YOUR GAME HERE
     ball.checkScreenEdges(screen)
-    ball.update(factor/frames)
+    ball.update(factor/frames, screen)
     ball.draw(screen)
-
-
-    
-
 
     # flip() the display to put your work on screen
     pygame.display.flip()
