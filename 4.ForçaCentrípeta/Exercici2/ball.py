@@ -9,26 +9,32 @@ class Ball:
         self.pos = np.array(pos_initial)
         self.vel = np.array(np.zeros(2))
         self.acc = np.array(np.zeros(2))
-        self.gravity = np.array([0, -9.81])
+        self.gravity = np.array([0, 9.81])
 
         #Paràmetres pel moviment angular
         self.radius_rotation = 100
-        self.theta = 0.0
+        self.theta = 60.0 * np.pi / 180.0
         self.angular_vel = 0.0
-        self.angular_acc = 0.01
+        self.angular_acc = 0.0
 
     def apply_force(self, force):     
         self.acc = self.acc + (np.array(force) / self.mass)
 
     def update(self, dt):
-        #self.acc = self.acc + self.gravity
-        #self.vel = self.vel + self.acc * dt
-        #self.pos = self.pos + self.vel * dt + 0.5 * (self.acc * np.power(dt,2))
+        
+        self.angular_acc = - (self.gravity[1] / self.radius_rotation) * np.sin(self.theta)
+
+        # Actualització de la velocitat angular
         self.angular_vel += self.angular_acc * dt
-        if self.angular_vel > (4 * np.pi):
-            self.angular_vel = 4 * np.pi
+
+        # Actualització de l'angle
         self.theta += self.angular_vel * dt
-        self.pos = np.array([self.radius_rotation * np.sin(self.theta) + 400 , self.radius_rotation * np.cos(self.theta) + 300])
+
+        # Càlcul de la posició respectant theta
+        self.pos = np.array([
+            400 + self.radius_rotation * np.sin(self.theta),  # X
+            450 + self.radius_rotation * np.cos(self.theta)   # Y
+        ])
         
 
 
@@ -61,9 +67,9 @@ class Ball:
 
     def draw(self, screen):
         # Draw de la corda
-        pygame.draw.line(screen, "black", (400, 300), (self.pos[0], self.pos[1]), 2)
+        pygame.draw.line(screen, "black", (400, 150), self.pos, 2)
 
-        #Draw de la pilota
+        # Draw de la pilota
         pygame.draw.circle(screen, self.color, self.pos, self.radius)
 
     def checkScreenEdges(self, screen:pygame.Surface):
