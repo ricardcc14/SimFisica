@@ -1,7 +1,7 @@
 import pygame
 import numpy as np
 
-class Ball:
+class Pendulum:
     def __init__ (self, radius, mass, pos_initial, color):
         self.radius = radius
         self.mass = mass
@@ -28,13 +28,11 @@ class Ball:
         self.acc_tang = -self.gravity * np.sin(self.theta)
         self.angular_acc = self.acc_tang / self.radius_rotation
 
-        # Actualització de la velocitat angular
         self.angular_vel += self.angular_acc * dt
 
-        # Actualització de l'angle
         self.theta += self.angular_vel * dt
 
-        # Càlcul de la posició respectant theta
+
         self.pos = np.array([
             screen.get_width()/2 + self.radius_rotation * np.sin(self.theta),  # X
             screen.get_height()/4  + self.radius_rotation * np.cos(self.theta)   # Y

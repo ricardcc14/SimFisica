@@ -14,10 +14,6 @@ render = False
 
 #Our setup 
 
-# Títol
-font = pygame.font.SysFont("Arial", 20)
-ui_title = font.render('Press to start!', True, "white")
-
 # Create ball with applied force
 ball = Ball(25, 10, np.array([400, 300]), 'white')
 
