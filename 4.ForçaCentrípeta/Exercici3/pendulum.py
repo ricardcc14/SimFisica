@@ -24,8 +24,12 @@ class Pendulum:
         self.acc = self.acc + (np.array(force) / self.mass)
 
     def apply_ballistic(self, bullet_mass, bullet_vel):
+        #Canvi en la velocitat lineal a causa de l'impacte
         self.vel = (bullet_mass * bullet_vel) / (self.mass + bullet_mass)
         self.angular_vel = self.vel / self.radius_rotation
+        #Els dos objectes passen a ser un, ja que la bala queda enganxada
+        self.mass = self.mass + bullet_mass
+
 
     def update(self, dt, screen):
 
@@ -35,7 +39,6 @@ class Pendulum:
         self.angular_vel += self.angular_acc * dt
 
         self.theta += self.angular_vel * dt
-
 
         self.pos = np.array([
             screen.get_width()/2 + self.radius_rotation * np.sin(self.theta),  # X
