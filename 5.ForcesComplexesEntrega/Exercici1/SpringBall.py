@@ -21,7 +21,6 @@ class SpringBall:
         self.acc = np.array(np.zeros(2))
     
     def detect_click(self, x, y):
-
         dist_x2 = (self.pos[0] - x) ** 2
         dist_y2 = (self.pos[1] - y) ** 2
 
@@ -65,8 +64,6 @@ class SpringBall:
 
         # Draw de la pilota
         pygame.draw.circle(screen, self.color, self.pos, self.radius)
-
-
 
     def get_kinetic_energy(self): 
         energy = np.array([0, 0])
