@@ -1,7 +1,8 @@
 # Example file showing a basic pygame "game loop"
 import pygame
 import numpy as np
-from SpringBall import SpringBall
+from Ball import Ball
+from Liquid import Liquid
 
 # pygame setup
 pygame.init()
@@ -15,9 +16,12 @@ render = False
 #Our setup 
 
 # Create ball with applied force
-ball = SpringBall(50, 10, np.array([screen.get_width()/2, screen.get_height()/2]), 'white', (screen.get_width()/2, 0), 30, 1)
-gravity = np.array([0, -9.81])
+ball = Ball(40, 200000000, np.array([screen.get_width()/2, 340]), 'brown')
+gravity = np.array([0, 9.81])
 moveByMouse = False
+
+liquid = Liquid("light blue", 250, 1000)
+
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -40,20 +44,27 @@ while running:
                 moveByMouse = False
                 x,y = pygame.mouse.get_pos()            
                 ball.set_new_position(y)
-                
 
     # fill the screen with a color to wipe away anything from last frame
-    screen.fill("teal")
+    screen.fill("white")
 
     # RENDER YOUR GAME HERE
+    
     if (moveByMouse == False):
-        ball.apply_Hooke()
-        ball.apply_gravity_force(-gravity)
-        ball.checkScreenEdges(screen)        
+        #Aplicar gravetat
+        ball.apply_gravity_force(gravity)
 
+        #Aplicar força de flotació
+        if (liquid.ball_is_inside(ball, screen)):
+            ball.apply_flotation_force(liquid, gravity, screen)
+           
+        ball.checkScreenEdges(screen)        
         ball.update(factor/frames, screen)
+        liquid.draw(screen)
         ball.draw(screen)
+
     else:
+        liquid.draw(screen)
         ball.checkScreenEdges(screen)        
         ball.draw(screen)
 

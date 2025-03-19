@@ -1,72 +1,47 @@
 import pygame
 import numpy as np
 
-class SpringBall:
-    def __init__ (self, radius, mass, pos_initial, color, spring_origin, spring_initial_x, spring_k):
+class Ball:
+    def __init__ (self, radius, mass, pos_initial, color):
         self.radius = radius
         self.mass = mass
         self.color = color
         self.pos = np.array(pos_initial)
         self.vel = np.array(np.zeros(2))
         self.acc = np.array(np.zeros(2))
+        self.gravity = np.array([0, -9.81])
 
-        self.spring_origin = spring_origin
-        self.spring_initial_x = spring_origin + np.array([0, 200])
-        self.spring_k = spring_k
+        #Paràmetres pel moviment angular
+        self.radius_rotation = 100
+        self.theta = 0.0
+        self.angular_vel = 0.0
+        self.angular_acc = 0.01
 
-    def set_new_position(self, new_position_y):
-        self.pos[0] = self.spring_origin[0]
-        self.pos[1] = new_position_y; 
-        self.vel = np.array(np.zeros(2))
-        self.acc = np.array(np.zeros(2))
-    
-    def detect_click(self, x, y):
+        #Paràmetres orbitació
+        self.semi_major_axis = 200
+        self.semi_minor_axis = 150
+        self.ecc = (np.sqrt(1 - (self.semi_minor_axis**2 / self.semi_major_axis**2)))
+        self.focus = np.array([400, 400])
 
-        dist_x2 = (self.pos[0] - x) ** 2
-        dist_y2 = (self.pos[1] - y) ** 2
+        self.angular_momentum = np.sqrt(10**4 * self.semi_major_axis * (1 - self.ecc**2))
 
-        if (np.sqrt(dist_x2 + dist_y2) <= self.radius):
-            return True
-        else: 
-            return False
+        self.trace = []
+
 
     def apply_force(self, force):     
         self.acc = self.acc + (np.array(force) / self.mass)
 
-    def apply_Hooke(self):     
-        distance_moved = self.pos - self.spring_initial_x
-        force = -self.spring_k * distance_moved
-        self.apply_force(force)
+    def update(self, dt):
+        orbit_radius = (self.semi_major_axis * (1 -self.ecc**2) / (1 + self.ecc * np.cos(self.theta)))
         
-    def apply_gravity_force(self, gravity):     
-        self.apply_force(self.mass * gravity)
-
-    def update(self, dt, screen):
-
-        #MOVIMENT LINEAL
-        self.vel = self.vel + self.acc * dt
-        self.pos = self.pos + self.vel * dt 
-        self.acc = np.array([0, 0])
-
-        #MOVIMENT ANGULAR
-        #self.acc_tang = -self.gravity * np.sin(self.theta)
-        #self.angular_acc = self.acc_tang / self.radius_rotation
-        #self.angular_vel += self.angular_acc * dt
-        #self.theta += self.angular_vel * dt
-
-        #self.pos = np.array([
-            #screen.get_width()/2 + self.radius_rotation * np.sin(self.theta),  # X
-            #screen.get_height()/4  + self.radius_rotation * np.cos(self.theta)   # Y
-        #])
-    
-    def draw(self, screen):
-        # Draw de la molla
-        pygame.draw.line(screen, "black", self.spring_origin, self.pos, 2)
-
-        # Draw de la pilota
-        pygame.draw.circle(screen, self.color, self.pos, self.radius)
-
-
+        self.angular_vel = self.angular_momentum / (orbit_radius**2)
+         
+        self.theta += self.angular_vel * dt
+        self.pos = np.array([orbit_radius * np.sin(self.theta) + 400 , orbit_radius * np.cos(self.theta) + 400])
+        
+        self.trace.append(self.pos)
+        if len(self.trace) > 1250:
+            self.trace.pop(0)
 
     def get_kinetic_energy(self): 
         energy = np.array([0, 0])
@@ -95,14 +70,14 @@ class SpringBall:
         self.vel = x_1 * u +  self.vel * w
         other_ball.vel = x_2 * u + other_ball.vel * w
 
+    def draw(self, screen):
 
-    def apply_ballistic(self, bullet_mass, bullet_vel):
-        #Canvi en la velocitat lineal a causa de l'impacte
-        self.vel = (bullet_mass * bullet_vel) / (self.mass + bullet_mass)
-        self.angular_vel = self.vel / self.radius_rotation
-        #Els dos objectes passen a ser un, ja que la bala queda enganxada
-        self.mass = self.mass + bullet_mass
+        #Draw de la pilota
+        pygame.draw.circle(screen, self.color, self.pos, self.radius)
 
+        pygame.draw.circle(screen, "red", (int(self.focus[0]), int(self.focus[1])), 5)
+        for i in range(len(self.trace)):
+            pygame.draw.circle(screen, "white", (int(self.trace[i][0]), int(self.trace[i][1])), 1)
     def checkScreenEdges(self, screen:pygame.Surface):
         #Bottom edge
         if (self.pos[1] > screen.get_height() - self.radius):

@@ -1,8 +1,8 @@
 import pygame
 import numpy as np
 
-class SpringBall:
-    def __init__ (self, radius, mass, pos_initial, color, spring_origin, spring_initial_x, spring_k):
+class Ball:
+    def __init__ (self, radius, mass, pos_initial, color):
         self.radius = radius
         self.mass = mass
         self.color = color
@@ -10,18 +10,15 @@ class SpringBall:
         self.vel = np.array(np.zeros(2))
         self.acc = np.array(np.zeros(2))
 
-        self.spring_origin = spring_origin
-        self.spring_initial_x = spring_origin + np.array([0, 200])
-        self.spring_k = spring_k
+        self.volume = 4/3 * np.pi * self.radius**3
 
     def set_new_position(self, new_position_y):
-        self.pos[0] = self.spring_origin[0]
+        self.pos[0] = self.pos[0]
         self.pos[1] = new_position_y; 
         self.vel = np.array(np.zeros(2))
         self.acc = np.array(np.zeros(2))
     
     def detect_click(self, x, y):
-
         dist_x2 = (self.pos[0] - x) ** 2
         dist_y2 = (self.pos[1] - y) ** 2
 
@@ -32,41 +29,29 @@ class SpringBall:
 
     def apply_force(self, force):     
         self.acc = self.acc + (np.array(force) / self.mass)
-
-    def apply_Hooke(self):     
-        distance_moved = self.pos - self.spring_initial_x
-        force = -self.spring_k * distance_moved
-        self.apply_force(force)
         
     def apply_gravity_force(self, gravity):     
         self.apply_force(self.mass * gravity)
 
-    def update(self, dt, screen):
+    def apply_flotation_force(self, liquid, gravity, screen):
+        #Altura submergida
+        h = (self.pos[1] + self.radius) - (screen.get_height() - liquid.height)
+        h = min(self.radius * 2, h)
+        #Volum submergit
+        Vs = np.pi * h**2 * (self.radius - h / 3)
+        #Força de flotació
+        B = (liquid.density * gravity * Vs)
+        self.apply_force(-B)
 
+    def update(self, dt, screen):
         #MOVIMENT LINEAL
         self.vel = self.vel + self.acc * dt
         self.pos = self.pos + self.vel * dt 
         self.acc = np.array([0, 0])
-
-        #MOVIMENT ANGULAR
-        #self.acc_tang = -self.gravity * np.sin(self.theta)
-        #self.angular_acc = self.acc_tang / self.radius_rotation
-        #self.angular_vel += self.angular_acc * dt
-        #self.theta += self.angular_vel * dt
-
-        #self.pos = np.array([
-            #screen.get_width()/2 + self.radius_rotation * np.sin(self.theta),  # X
-            #screen.get_height()/4  + self.radius_rotation * np.cos(self.theta)   # Y
-        #])
     
     def draw(self, screen):
-        # Draw de la molla
-        pygame.draw.line(screen, "black", self.spring_origin, self.pos, 2)
-
         # Draw de la pilota
         pygame.draw.circle(screen, self.color, self.pos, self.radius)
-
-
 
     def get_kinetic_energy(self): 
         energy = np.array([0, 0])
