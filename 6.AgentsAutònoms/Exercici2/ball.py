@@ -19,8 +19,21 @@ class Ball:
         self.acc = self.acc + (np.array(force) / self.mass)
    
     def update(self, dt, food):
+
+        nearest_distance = 99999
+        nearest_index = -1
+
+        for i, f in enumerate(food):
+            dist = np.linalg.norm(self.pos - f.pos)
+            if (dist < nearest_distance):
+                nearest_distance = dist
+                nearest_index = i
+    
+        nearestFood = food[nearest_index]
+
+
         #Trobar direcció desitjada
-        desired_direction = food.pos - self.pos
+        desired_direction = nearestFood.pos - self.pos
         desired_direction_norm = np.linalg.norm(desired_direction)
 
         #Limitar direcció màxima
@@ -40,12 +53,34 @@ class Ball:
         self.pos = self.pos + self.vel * dt 
         self.acc = np.array([0, 0])
 
-    def check_collision(self, screen, food):
-        distance = np.linalg.norm(self.pos - food.pos)
-        sum_radi = self.radius + food.radius
 
-        if distance <= sum_radi:
-            food.reposition(screen)
+
+
+
+    def check_collision(self, screen, food, other_ball):
+        #CHECK FOR FOOD COLISION
+        for f in food:
+            distance2food = np.linalg.norm(self.pos - f.pos)
+            sum_radi = self.radius + f.radius
+
+            if distance2food <= sum_radi:
+                f.reposition(screen)
+                if self.radius < 100:
+                    self.radius += 0.25*f.radius
+
+
+        #CHECK FOR OTHER BALL COLISION
+        distance2ball = np.linalg.norm(self.pos - other_ball.pos)
+        sum_radi = self.radius + other_ball.radius
+
+        if distance2ball <= sum_radi:
+            self.collision_ball(other_ball)
+            if (self.radius >= other_ball.radius):
+                if self.radius < 100:
+                    self.radius += 0.25*other_ball.radius
+                other_ball.pos = np.array([np.random.randint(self.radius, 800 - self.radius), np.random.randint(self.radius, 600 - self.radius)])
+                other_ball.radius = 10
+
 
     def get_kinetic_energy(self): 
         energy = np.array([0, 0])
@@ -67,7 +102,7 @@ class Ball:
 
         #Distància de seguretat
         if (np.abs(np.linalg.norm(other_ball.pos - self.pos)) <= (self.radius + other_ball.radius)):
-            self.pos = self.pos + 1.1*(-u * ((self.radius + other_ball.radius) - np.linalg.norm(other_ball.pos - self.pos)))
+            self.pos = self.pos + 1.2*(-u * ((self.radius + other_ball.radius) - np.linalg.norm(other_ball.pos - self.pos)))
 
         #Trobar els vectors unitaris de l'eix de xoc
         w = np.array([-u[1], u[0]])

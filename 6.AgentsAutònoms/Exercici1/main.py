@@ -12,23 +12,15 @@ screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
 running = True
 frames = 60
-factor = 5
+factor = 15
 render = False
 
 #Our setup 
-
-# Títol
-font = pygame.font.SysFont("Arial", 20)
-ui_title = font.render('Press to start!', True, "white")
-
-
 # Create food
 food = Food(20, 'red')
 
 # Create ball with applied force
-ball = Ball(40, 100, np.array([350, 350]), 'white', food)
-
-
+ball = Ball(30, 10, np.array([350, 350]), 'white')
 
 while running:
     # poll for events
@@ -37,14 +29,13 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         
-
-
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("teal")
 
     # RENDER YOUR GAME HERE
-    ball.check_collision(screen)
-    ball.update(1/frames)
+    ball.check_collision(screen, food)
+    ball.checkScreenEdges(screen)
+    ball.update(factor/frames, food)
     ball.draw(screen)
     food.draw(screen)
    
