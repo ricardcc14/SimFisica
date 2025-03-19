@@ -14,7 +14,7 @@ class Path:
 
     def getVector(self, sense):
         if (len(self.points) == 2):
-            if (sense < 0):
+            if (sense > 0):
                 vector = self.points[1] - self.points[0]
             else:
                 vector = self.points[0] - self.points[1]
@@ -27,7 +27,7 @@ class Path:
         return np.array([max_height, min_height])
     
     def getOrigin(self, sense):
-        if (sense < 0):
+        if (sense > 0):
             origin = self.points[0]
         else:
             origin = self.points[1]

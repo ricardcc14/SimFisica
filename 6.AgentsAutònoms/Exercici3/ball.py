@@ -23,6 +23,9 @@ class Ball:
         self.acc = self.acc + (np.array(force) / self.mass)
    
     def update(self, screen, dt, path):
+
+        print(str(self.vel))
+
         line_vector = path.getVector(self.vel[0])
         line_origin = path.getOrigin(self.vel[0])
         limits = path.getPathLimits()
@@ -30,10 +33,8 @@ class Ball:
         self.future_pos = self.pos + 5 * self.vel
 
         normal_vector = np.array([-line_vector[1], line_vector[0]])
-        print("Normal vector", str(normal_vector))
         projection_vector = np.dot(self.future_pos - line_origin, line_vector) * line_vector
         self.project_pos = line_origin + projection_vector
-        print("Projection vector: ", str(normal_vector))
 
         #self.project_pos = np.array([0,0])
         #self.project_pos[0] = self.future_pos[0]
@@ -68,8 +69,6 @@ class Ball:
         print("Target: " , self.target_pos)
         print("Projection: ", self.project_pos)
         print("Limits: " , str(limits))
-
-        self.checkScreenEdges(screen)
 
     def draw(self, screen):
         pygame.draw.circle(screen, "white", self.pos, self.radius)

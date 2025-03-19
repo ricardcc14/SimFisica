@@ -36,7 +36,7 @@ while running:
 
     # RENDER YOUR GAME HERE
     #BALL 1 LOGIC
-    #ball_1.checkScreenEdges(screen)
+    ball_1.checkScreenEdges(screen)
 
     ball_1.update(screen, factor/frames, path)
 
