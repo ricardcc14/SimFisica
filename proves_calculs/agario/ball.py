@@ -31,19 +31,18 @@ class Ball:
     
         nearestFood = food[nearest_index]
 
+
         #Trobar direcció desitjada
         desired_direction = nearestFood.pos - self.pos
         desired_direction_norm = np.linalg.norm(desired_direction)
 
-        speed_factor = np.clip(desired_direction_norm / 10, 0.1, 1)
-
         #Limitar direcció màxima
-        if (desired_direction_norm > self.max_speed * speed_factor):
-            desired_direction = (desired_direction / desired_direction_norm) * self.max_speed * speed_factor
+        if (desired_direction_norm > self.max_speed):
+            desired_direction = (desired_direction / desired_direction_norm) * self.max_speed
 
         #Calcular força de rotació
         steering_force_dir = desired_direction - self.vel
-        self.apply_force((1 + desired_direction_norm / desired_direction_norm) * steering_force_dir)
+        self.apply_force(steering_force_dir)
 
         self.vel = self.vel + self.acc * dt
 
@@ -55,6 +54,9 @@ class Ball:
         self.acc = np.array([0, 0])
 
 
+
+
+
     def check_collision(self, screen, food, other_ball):
         #CHECK FOR FOOD COLISION
         for f in food:
@@ -63,6 +65,9 @@ class Ball:
 
             if distance2food <= sum_radi:
                 f.reposition(screen)
+                if self.radius < 100:
+                    self.radius += 0.25*f.radius
+
 
         #CHECK FOR OTHER BALL COLISION
         distance2ball = np.linalg.norm(self.pos - other_ball.pos)
@@ -70,7 +75,12 @@ class Ball:
 
         if distance2ball <= sum_radi:
             self.collision_ball(other_ball)
-            
+            if (self.radius >= other_ball.radius):
+                if self.radius < 100:
+                    self.radius += 0.25*other_ball.radius
+                other_ball.pos = np.array([np.random.randint(self.radius, 800 - self.radius), np.random.randint(self.radius, 600 - self.radius)])
+                other_ball.radius = 10
+
 
     def get_kinetic_energy(self): 
         energy = np.array([0, 0])
@@ -83,6 +93,8 @@ class Ball:
         return energy
 
     
+
+
     def collision_ball(self, other_ball):
 
         #Trobar els vectors unitaris de l'eix de xoc

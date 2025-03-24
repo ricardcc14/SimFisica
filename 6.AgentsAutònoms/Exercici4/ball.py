@@ -12,7 +12,7 @@ class Ball:
         self.acc = np.array(np.zeros(2))
         self.gravity = np.array([0, 9.81])
         self.max_speed = 10
-        self.max_steering = 1
+        self.max_steering = 5
 
         self.future_pos = np.array([0,0])
         self.project_pos = np.array([0,0])
@@ -22,72 +22,33 @@ class Ball:
     def apply_force(self, force):     
         self.acc = self.acc + (np.array(force) / self.mass)
    
-    def update(self, dt, path):
+    def update(self, dt, path, screen):
 
-        self.future_pos = self.pos + 5 * self.vel
+        self.future_pos = self.pos + 10 * self.vel
 
-        closest_segment = None
-        min_dist = float('inf')
-        projected_pos = None
-        
+        line_info = path.getCurrentLineInfo(self.vel[0], self.future_pos[0], screen)
+        line_origin = line_info['origin'] 
+        line_vector = line_info['vector']
 
-        for i in range(len(path.points)- 1):
-            line_origin = path.points[i]
-            line_end = path.points[i + 1]
-            line_vector = line_end - line_origin
-            line_vector = line_vector / np.linalg.norm(line_vector)
-
-            projection_vector = np.dot(self.future_pos - line_origin, line_vector) * line_vector
-            projected_point = line_origin + projection_vector
-
-            distance = np.linalg.norm(self.future_pos - projected_point)
-
-            if (distance < min_dist):# and (0 <= projection_vector <= np.linalg.norm(line_vector)):
-                min_dist = distance
-                closest_segment = (line_origin, line_end, line_vector)
-                projected_pos = projected_point
-
-
-        if closest_segment:
-            line_origin, line_end, line_vector = closest_segment
-            self.project_pos = projected_pos
-            self.target_pos = projected_pos + 20 * line_vector
-
-            desired_direction = self.target_pos - self.pos
-            desired_direction_norm = np.linalg.norm(desired_direction)
-
-
-
-        '''
-        line_vector = path.getVector(self.vel[0])
-        line_origin = path.getOrigin(self.vel[0])
-        limits = path.getPathLimits()
-
-
-        normal_vector = np.array([-line_vector[1], line_vector[0]])
         projection_vector = np.dot(self.future_pos - line_origin, line_vector) * line_vector
         self.project_pos = line_origin + projection_vector
 
-
-        self.target_pos = self.project_pos + 20*line_vector
+        self.target_pos = self.project_pos + 25*line_vector
        
         #Trobar direcció desitjada
         desired_direction = self.target_pos - self.pos
         desired_direction_norm = np.linalg.norm(desired_direction)
-        '''
 
         #Limitar direcció màxima
         if (desired_direction_norm > self.max_speed):
             desired_direction = (desired_direction / desired_direction_norm) * self.max_speed
 
-
-
-        limits = path.getPathLimits(line_origin, line_end)
-
-        if not (limits[1][1] <= self.pos[1] <= limits[0][1]):
+        difference_vector = np.linalg.norm(self.future_pos - self.project_pos)
+        
+        if (difference_vector > 25):
             #Calcular força de rotació
             steering_force_dir = desired_direction - self.vel
-            self.apply_force(steering_force_dir * self.max_steering)
+            self.apply_force(steering_force_dir * 2 *self.max_steering)
 
         self.vel = self.vel + self.acc * dt
 
@@ -99,41 +60,20 @@ class Ball:
         self.pos = self.pos + self.vel * dt 
         self.acc = np.array([0, 0])
 
-        print("Position: " , self.pos)
-        print("Target: " , self.target_pos)
-        print("Projection: ", self.project_pos)
-        print("Limits: " , str(limits))
 
     def draw(self, screen):
-        pygame.draw.circle(screen, "white", self.pos, self.radius)
+        pygame.draw.circle(screen, self.color, self.pos, self.radius)
         pygame.draw.circle(screen, "blue", self.future_pos, self.radius/2)
         pygame.draw.circle(screen, "red", self.project_pos, self.radius/2)
         pygame.draw.circle(screen, "green", self.target_pos, self.radius/2)
 
 
-    def check_collision(self, screen, food, other_ball):
-        #CHECK FOR FOOD COLISION
-        for f in food:
-            distance2food = np.linalg.norm(self.pos - f.pos)
-            sum_radi = self.radius + f.radius
-
-            if distance2food <= sum_radi:
-                f.reposition(screen)
-                if self.radius < 100:
-                    self.radius += 0.25*f.radius
-
-
-        #CHECK FOR OTHER BALL COLISION
+    def check_collision(self, other_ball):
         distance2ball = np.linalg.norm(self.pos - other_ball.pos)
         sum_radi = self.radius + other_ball.radius
 
         if distance2ball <= sum_radi:
             self.collision_ball(other_ball)
-            if (self.radius > other_ball.radius):
-                if self.radius < 100:
-                    self.radius += 0.25*other_ball.radius
-                other_ball.pos = np.array([np.random.randint(self.radius, 800 - self.radius), np.random.randint(self.radius, 600 - self.radius)])
-                other_ball.radius = 10
 
 
     def get_kinetic_energy(self): 

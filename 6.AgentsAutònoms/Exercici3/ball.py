@@ -30,7 +30,7 @@ class Ball:
         line_origin = path.getOrigin(self.vel[0])
         limits = path.getPathLimits()
 
-        self.future_pos = self.pos + 5 * self.vel
+        self.future_pos = self.pos + 10 * self.vel
 
         normal_vector = np.array([-line_vector[1], line_vector[0]])
         projection_vector = np.dot(self.future_pos - line_origin, line_vector) * line_vector
@@ -41,7 +41,7 @@ class Ball:
         #self.project_pos[1] = 300
         #self.project_pos = self.future_pos + projection_vector
 
-        self.target_pos = self.project_pos + 20*line_vector
+        self.target_pos = self.project_pos + 25*line_vector
        
         #Trobar direcció desitjada
         desired_direction = self.target_pos - self.pos

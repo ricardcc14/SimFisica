@@ -16,15 +16,25 @@ render = False
 
 #Our setup 
 
+# Títol
+font = pygame.font.SysFont("Arial", 30)
+ui_title = font.render('Agar.io', True, "white")
+
 # Create food
 food_1 = Food(10, 'red')
 food_2 = Food(10, 'orange')
+food_3 = Food(10, 'gray')
+food_4 = Food(10, 'pink')
+food_5 = Food(10, 'purple')
+food_6 = Food(10, 'green')
+food_7 = Food(10, 'turquoise')
+food_8 = Food(10, 'black')
 
-food = [food_1, food_2]
+food = [food_1, food_2, food_3, food_4, food_5, food_6, food_7, food_8]
 
 # Create ball with applied force
-ball_1 = Ball(30, 10, np.array([500, 500]), 'white')
-ball_2 = Ball(30, 10, np.array([100, 100]), 'yellow')
+ball_1 = Ball(20, 10, np.array([500, 500]), 'white')
+ball_2 = Ball(20, 10, np.array([100, 100]), 'yellow')
 
 while running:
     # poll for events
@@ -37,6 +47,8 @@ while running:
     screen.fill("teal")
 
     # RENDER YOUR GAME HERE
+    screen.blit(ui_title, (30, 30))
+
     #BALL 1 LOGIC
     ball_1.check_collision(screen, food, ball_2)
     ball_1.checkScreenEdges(screen)

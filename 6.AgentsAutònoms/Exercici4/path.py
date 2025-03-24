@@ -23,6 +23,47 @@ class Path:
                 vector = self.points[0] - self.points[1]
 
         return (vector / np.linalg.norm(vector))
+     
+
+    def getCurrentLineInfo(self, sense, x_position, screen):
+        line_info = {}
+        
+        if (x_position < 0):
+            x_position = 0
+        if (x_position > screen.get_width()):
+            x_position = screen.get_width();    
+
+        if (x_position >= self.points[0][0] and x_position < self.points[1][0]):
+            if (sense > 0):
+                line_info['vector'] = (self.points[1] - self.points[0]) / np.linalg.norm(self.points[1] - self.points[0])
+                line_info['origin'] = self.points[0]
+                line_info['end'] = self.points[1]
+            else:
+                line_info['vector'] = (self.points[0] - self.points[1]) / np.linalg.norm(self.points[0] - self.points[1])
+                line_info['origin'] = self.points[1]
+                line_info['end'] = self.points[0]
+
+        if (x_position >= self.points[1][0] and x_position < self.points[2][0]):
+            if (sense > 0):
+                line_info['vector'] = (self.points[2] - self.points[1]) / np.linalg.norm(self.points[2] - self.points[1])
+                line_info['origin'] = self.points[1]
+                line_info['end'] = self.points[2]
+            else:
+                line_info['vector'] = (self.points[1] - self.points[2]) / np.linalg.norm(self.points[1] - self.points[2])
+                line_info['origin'] = self.points[2]
+                line_info['end'] = self.points[1]
+
+        if (x_position >= self.points[2][0] and x_position <= self.points[3][0]):
+            if (sense > 0):
+                line_info['vector'] = (self.points[3] - self.points[2]) / np.linalg.norm(self.points[3] - self.points[2])
+                line_info['origin'] = self.points[2]
+                line_info['end'] = self.points[3]
+            else:
+                line_info['vector'] = self.points[2] - self.points[3] / np.linalg.norm(self.points[2] - self.points[3])
+                line_info['origin'] = self.points[3]
+                line_info['end'] = self.points[2]      
+
+        return line_info
                         
     def getPathLimits(self, line_origin, line_end):
         #max_height = self.points[0][1] + 25
