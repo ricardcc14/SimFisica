@@ -1,0 +1,47 @@
+{
+    "levels": [
+        {
+            "id": 1,
+            "catapult_pos": { "x": 100, "y": 100 },
+            "birds": ["red", "blue", "red", "yellow"],
+            "pigs": {
+                "king": { "x": 100, "y": 100, "angle": 0 }
+            },
+            "blocks": [
+                {
+                    "type": "2x2",
+                    "material": "wood",
+                    "x": 100,
+                    "y": 100,
+                    "angle": 0
+                }
+            ],
+            "punctuation": { "3stars": 100, "2stars": 50, "1star": 25 }
+        },
+        {
+            "id": 2,
+            "catapult_pos": { "x": 120, "y": 120 },
+            "birds": ["yellow", "red", "blue"],
+            "pigs": {
+                "boss": { "x": 200, "y": 150, "angle": 15 }
+            },
+            "blocks": [
+                {
+                    "type": "3x3",
+                    "material": "stone",
+                    "x": 150,
+                    "y": 150,
+                    "angle": 10
+                },
+                {
+                    "type": "1x2",
+                    "material": "wood",
+                    "x": 170,
+                    "y": 130,
+                    "angle": 5
+                }
+            ],
+            "punctuation": { "3stars": 200, "2stars": 100, "1star": 50 }
+        }
+    ]
+}

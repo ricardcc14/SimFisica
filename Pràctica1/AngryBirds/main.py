@@ -1,11 +1,19 @@
+#Libraries
 import pygame
 import Box2D as b2
 import utils
+
+#Managers
+
+from LevelManager import LevelManager
+from View import View
+
 from ContactListener import ContactListener
 from Surface import Surface
 from Bird import Bird
 from Box import Box
 from Pig import Pig
+
 
 # pygame setup
 pygame.init()
@@ -13,7 +21,71 @@ screen = pygame.display.set_mode((1200, 600))
 clock = pygame.time.Clock()
 frames = 120
 running = True
+scene = "start" # start, menu, lvl_1, lvl_2, lvl_3
 
+
+# Managers initialization
+levelManager = LevelManager(screen)
+
+view = View(screen, levelManager)
+origin = b2.b2Vec2(0,0)
+
+while running:
+    screen.fill('gray')
+
+    # Event handling
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+        # Start screen events
+        elif event.type == pygame.MOUSEBUTTONDOWN and scene == "start":
+            if view.play_button.collidepoint(pygame.mouse.get_pos()):
+                scene = "menu"
+
+        # Menu screen events
+        elif event.type == pygame.MOUSEBUTTONDOWN and scene == "menu":
+            if view.level_1_button.collidepoint(pygame.mouse.get_pos()):
+                scene = "lvl_1"
+                levelManager.loadLevel(scene)
+            elif view.level_2_button.collidepoint(pygame.mouse.get_pos()):
+                scene = "lvl_2"
+                levelManager.loadLevel(scene)
+            elif view.level_3_button.collidepoint(pygame.mouse.get_pos()):
+                scene = "lvl_3"
+                levelManager.loadLevel(scene)
+
+        # Level screen events
+        
+
+        elif event.type == pygame.MOUSEBUTTONDOWN and scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3":
+            origin = b2.b2Vec2(pygame.mouse.get_pos())
+            mouse_pressed = True
+        elif event.type == pygame.MOUSEBUTTONUP and scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3":
+            end = b2.b2Vec2(pygame.mouse.get_pos())
+            levelManager.throwBird(origin, end)
+            mouse_pressed = False
+        
+
+
+    if scene == "start":
+        view.drawStart()
+    elif scene == "menu":
+        view.drawMenu()
+    elif scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3":
+        levelManager.runLevel(scene)
+        view.drawLevel(levelManager)
+
+    pygame.display.flip()
+    clock.tick(frames)
+
+    
+
+
+pygame.quit()
+
+
+'''
 # Box2D
 world = b2.b2World()
 time_step = 1/frames
@@ -103,3 +175,4 @@ while running:
     clock.tick(frames)  # limits FPS to 60
 
 pygame.quit()
+'''
