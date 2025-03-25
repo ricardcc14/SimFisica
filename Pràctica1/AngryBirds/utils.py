@@ -1,6 +1,7 @@
 import numpy as np
 import pygame
 import Box2D as b2
+import json
 
 def rotate_point(point, angle):
     cos_theta = np.cos(angle)
@@ -53,3 +54,15 @@ def drawRotatedImage(screen:pygame.Surface, image:pygame.Surface, position:b2.b2
 
     screen.blit(img, (position.x-translation_x, position.y-translation_y))
     pass
+
+def readJson(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+        return data
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        return None
+    except json.JSONDecodeError:
+        print(f"Error decoding JSON file: {file_path}")
+        return None
