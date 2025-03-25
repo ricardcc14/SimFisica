@@ -50,8 +50,8 @@ class Bird:
                 self.setAngularVelocity(0)
                 if((seconds-self.prevSec) > self.deathTime): self.destroy(world)
             else:
-                self.currentStatus = 1;
-                self.timer+=(seconds-self.prevSec);
+                self.currentStatus = 1
+                self.timer+=(seconds-self.prevSec)
                 self.prevSec = seconds
         pass
 
