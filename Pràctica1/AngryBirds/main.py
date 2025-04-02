@@ -58,10 +58,10 @@ while running:
         # Level screen events
         
 
-        elif event.type == pygame.MOUSEBUTTONDOWN and scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3":
+        elif event.type == pygame.MOUSEBUTTONDOWN and (scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3"):
             origin = b2.b2Vec2(pygame.mouse.get_pos())
             mouse_pressed = True
-        elif event.type == pygame.MOUSEBUTTONUP and scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3":
+        elif event.type == pygame.MOUSEBUTTONUP and (scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3"):
             end = b2.b2Vec2(pygame.mouse.get_pos())
             levelManager.throwBird(origin, end)
             mouse_pressed = False
