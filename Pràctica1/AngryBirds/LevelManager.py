@@ -3,6 +3,7 @@ import pygame
 import Box2D as b2
 from Bird import Bird
 from Box import Box
+from Circle import Circle
 from Pig import Pig
 from Surface import Surface
 from ContactListener import ContactListener
@@ -25,6 +26,7 @@ class LevelManager:
 
         self.birds:list[Bird] = []
         self.boxes:list[Box] = []
+        self.circles:list[Circle] = []
         self.pigs:list[Pig] = []
 
 
@@ -33,6 +35,9 @@ class LevelManager:
         self.basicBird.append(pygame.image.load("assets/BasicBirdCollided.png"))
         self.basicBird.append(pygame.image.load("assets/BasicBirdDisappear.png"))
 
+        self.bkgSky = pygame.image.load("assets/sky.png")
+        self.bkgFloor = pygame.image.load("assets/floor.png")
+
         self.surface = Surface(self.world, self.screen.get_width()/2, 100, self.screen.get_width()*2, 5)
 
     def loadLevel(self, level):
@@ -40,23 +45,27 @@ class LevelManager:
 
         # birds.append(Bird(world, 300, 300, 25, basicBird))
 
-        self.boxes.append(Box(self.world, 1000, 200, 100, 100, None))
-        self.boxes.append(Box(self.world, 1000, 300, 100, 100, None))
+        self.boxes.append(Box(self.world, 0, 200, 100, 100, None, "wood"))
+        self.boxes.append(Box(self.world, 1000, 300, 100, 100, None, "wood"))
+        self.boxes.append(Box(self.world, 1000, 400, 100, 100, None, "wood"))
 
-        self.pigs.append(Pig(self.world, 1000, 400, 50, None))
+        self.pigs.append(Pig(self.world, 1000, 500, 50, None))
                     
                     
     def runLevel(self, scene):
         # fill the screen with a color to wipe away anything from last frame
         self.screen.fill("gray")
-        bkgSky = pygame.image.load("assets/sky.png")
-        bkgFloor = pygame.image.load("assets/floor.png")
+        
 
         # RENDER YOUR GAME HERE
         self.world.Step(self.time_step, self.vel_iters, self.pos_iters)
 
-        utils.drawRotatedImage(self.screen, bkgSky, b2.b2Vec2(self.screen.get_width()/2, self.screen.get_height()/2), self.screen.get_width(), self.screen.get_height(), 0)
-        utils.drawRotatedImage(self.screen, bkgFloor, b2.b2Vec2(self.screen.get_width()/2, self.screen.get_height()/2+45), self.screen.get_width(), self.screen.get_height(), 0)
+
+        
+    
+    def draw(self):
+        utils.drawRotatedImage(self.screen, self.bkgSky, b2.b2Vec2(self.screen.get_width()/2, self.screen.get_height()/2), self.screen.get_width(), self.screen.get_height(), 0)
+        utils.drawRotatedImage(self.screen, self.bkgFloor, b2.b2Vec2(self.screen.get_width()/2, self.screen.get_height()/2+45), self.screen.get_width(), self.screen.get_height(), 0)
 
         #if(mouse_pressed): pygame.draw.line(self.screen, "crimson", origin, pygame.mouse.get_pos())
 
@@ -82,10 +91,6 @@ class LevelManager:
                 pig.draw(self.screen)
 
         self.surface.draw(self.screen)
-
-        
-    
-    def draw(self, screen):
         pass
 
     def throwBird(self, origin, end):

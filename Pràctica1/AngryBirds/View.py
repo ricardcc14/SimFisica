@@ -42,5 +42,5 @@ class View:
 
     def drawLevel(self, levelManager):
         
-        levelManager.draw(self.screen)
+        levelManager.draw()
         pass
