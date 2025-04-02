@@ -2,10 +2,9 @@ import pygame
 import Box2D as b2
 import utils
 
-class Box:
-    def __init__(self, world:b2.b2World, x:float, y:float, w:float, h:float, images:list[pygame.Surface], material):
-        self.w = w
-        self.h = h
+class Circle:
+    def __init__(self, world:b2.b2World, x:float, y:float, radius:float, images:list[pygame.Surface], material):
+        self.radius = radius
         self.images = images
 
         self.material = material
@@ -19,9 +18,9 @@ class Box:
         bodydf.userData = self
         self.body:b2.b2Body = world.CreateBody(bodydf)
 
-        boxshape = b2.b2PolygonShape(box=utils.pixelToWorld(w/2, h/2))
+        circleshape = b2.b2CircleShape(radius=utils.pixelToWorld(radius))
         fd = b2.b2FixtureDef()
-        fd.shape=boxshape
+        fd.shape=circleshape
         fd.density = 1
         fd.restitution = 0
         fd.friction = 1
