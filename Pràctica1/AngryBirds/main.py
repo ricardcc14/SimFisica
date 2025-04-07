@@ -1,3 +1,4 @@
+
 #Libraries
 import pygame
 import Box2D as b2
@@ -60,14 +61,12 @@ while running:
 
         # Level screen events
         
-
         elif event.type == pygame.MOUSEBUTTONDOWN and (scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3"):
-            origin = b2.b2Vec2(pygame.mouse.get_pos())
-            mouse_pressed = True
+            mouse_pos = b2.b2Vec2(event.pos[0], event.pos[1])
+            levelManager.handleMouseDown(mouse_pos)
         elif event.type == pygame.MOUSEBUTTONUP and (scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3"):
-            end = b2.b2Vec2(pygame.mouse.get_pos())
-            levelManager.throwBird(origin, end)
-            mouse_pressed = False
+            mouse_pos = b2.b2Vec2(event.pos[0], event.pos[1])
+            levelManager.handleMouseUp(mouse_pos)
         
 
 
@@ -76,7 +75,7 @@ while running:
     elif scene == "menu":
         view.drawMenu()
     elif scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3":
-        levelManager.runLevel(scene)
+        levelManager.runLevel()
         view.drawLevel(levelManager)
 
     pygame.display.flip()

@@ -3,11 +3,9 @@ import Box2D as b2
 import utils
 
 class Circle:
-    def __init__(self, world:b2.b2World, x:float, y:float, radius:float, images:list[pygame.Surface], material):
+    def __init__(self, world:b2.b2World, x:float, y:float, radius:float, images:list[pygame.Surface]):
         self.radius = radius
         self.images = images
-
-        self.material = material
 
         self.isRemoved = False
         self.currentStatus = 0 #0 is alive, 1 is collided 2 is toDestroy
@@ -30,9 +28,10 @@ class Circle:
     def draw(self, screen:pygame.Surface):
         position:b2.b2Vec2 = utils.worldToPixel(self.body.position.copy())
         position.y = screen.get_height()-position.y
-        
-        pygame.draw.rect(screen, "lightgray", (position.x-self.w/2, position.y-self.h/2, self.w, self.h))
-        pygame.draw.rect(screen, "black", (position.x-self.w/2, position.y-self.h/2, self.w, self.h), 1)
+        pygame.draw.circle(screen, 'lightgray', position, self.radius)
+        pygame.draw.circle(screen, 'black', position, self.radius, 1)
+        #pygame.draw.rect(screen, "lightgray", (position.x-self.w/2, position.y-self.h/2, self.w, self.h))
+        #pygame.draw.rect(screen, "black", (position.x-self.w/2, position.y-self.h/2, self.w, self.h), 1)
         pass
 
     def update(self):
