@@ -5,7 +5,6 @@ import Box2D as b2
 import utils
 
 #Managers
-
 from LevelManager import LevelManager
 from View import View
 
@@ -15,14 +14,13 @@ from Bird import Bird
 from Box import Box
 from Pig import Pig
 
-
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((1200, 600))
 clock = pygame.time.Clock()
 frames = 120
 running = True
-scene = "start" # start, menu, lvl_1, lvl_2, lvl_3
+scene = "start" #start, menu, lvl_1, lvl_2, lvl_3
 
 
 # Managers initialization
@@ -68,7 +66,6 @@ while running:
             mouse_pos = b2.b2Vec2(event.pos[0], event.pos[1])
             levelManager.handleMouseUp(mouse_pos)
         
-
 
     if scene == "start":
         view.drawStart()

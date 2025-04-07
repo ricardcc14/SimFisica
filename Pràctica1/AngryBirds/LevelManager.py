@@ -242,7 +242,7 @@ class LevelManager:
 
     def handleMouseDown(self, mouse_pos):
         print("MouseDown")
-        if self.levelState == self.STATE_NO_BIRD_SELECTED:
+        if self.levelState == self.STATE_NO_BIRD_SELECTED and self.birds == []:
             
             print(self.birdsAvailable)
             for i, area in enumerate(self.bird_area):
