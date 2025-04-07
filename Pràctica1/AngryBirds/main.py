@@ -47,13 +47,16 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN and scene == "menu":
             if view.level_1_button.collidepoint(pygame.mouse.get_pos()):
                 scene = "lvl_1"
-                levelManager.loadLevel(scene)
+                levelNum = 1
+                levelManager.loadLevel(levelNum)
             elif view.level_2_button.collidepoint(pygame.mouse.get_pos()):
                 scene = "lvl_2"
-                levelManager.loadLevel(scene)
+                levelNum = 2
+                levelManager.loadLevel(levelNum)
             elif view.level_3_button.collidepoint(pygame.mouse.get_pos()):
                 scene = "lvl_3"
-                levelManager.loadLevel(scene)
+                levelNum = 3
+                levelManager.loadLevel(levelNum)
 
         # Level screen events
         

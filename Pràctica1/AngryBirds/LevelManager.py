@@ -15,7 +15,6 @@ class LevelManager:
         self.levels_json = utils.readJson("levels.json")
         self.screen = screen
 
-
         self.frames = 60
         # Box2D
         self.world = b2.b2World()
@@ -25,6 +24,7 @@ class LevelManager:
         self.world.contactListener = contactListener
 
         self.birds:list[Bird] = []
+        self.birdsAvailable:list = []
         self.boxes:list[Box] = []
         self.circles:list[Circle] = []
         self.pigs:list[Pig] = []
@@ -40,8 +40,46 @@ class LevelManager:
 
         self.surface = Surface(self.world, self.screen.get_width()/2, 100, self.screen.get_width()*2, 5)
 
-    def loadLevel(self, level):
+    def loadLevel(self, level_id):
+        level_data = []
+        data = utils.readJson('levels.json')
+        for i, level in enumerate(data):
+            if (i == level_id -1):
+                level_data = level
+            
+        #Load Birds
+        for i, bird in enumerate(level_data["birds"]):
+            self.birdsAvailable.append("assets/birds/" + bird + ".png") 
+        #Load Pigs
+        
+        #for i, pig in enumerate(level_data["pigs"]):
+        #    self.pigs.append(Pig(self.world, pig["x"], pig["y"], pig["radius"], None))
+        #Load Structures
+        for i, structure in enumerate(level_data["blocks"]):
+            material = structure["material"]
+            type = structure["type"]
+            blockSprites = []
+            blockSprites.append("assets/blocks/" + material + "/" + type + "/1.png")
+            blockSprites.append("assets/blocks/" + material + "/" + type + "/2.png")
+            blockSprites.append("assets/blocks/" + material + "/" + type + "/3.png")
+            
+            if(material == "wood"):
+                if (type == "box"):
+                    self.boxes.append(WoodenBox(self.world, structure["x"], structure["y"], structure["w"], structure["l"], blockSprites))
+                elif(type == "circle"):
+            
+            elif(material == "stone"):
+                if (type == "box"):
+                
+                elif(type == "circle"):
 
+            elif(material == "glass"):
+                if (type == "box"):
+                
+                elif(type == "circle"):
+
+            self.boxes.append(Circle(self.world, structure["x"], structure["y"], 60, None, structure["material"]))
+        print(str(level_data))
 
         # birds.append(Bird(world, 300, 300, 25, basicBird))
 

@@ -3,12 +3,12 @@ import Box2D as b2
 import utils
 
 class Box:
-    def __init__(self, world:b2.b2World, x:float, y:float, w:float, h:float, images:list[pygame.Surface], material):
+    def __init__(self, world:b2.b2World, x:float, y:float, w:float, h:float, images:list[pygame.Surface]):
         self.w = w
         self.h = h
         self.images = images
 
-        self.material = material
+        #self.material = material
 
         self.isRemoved = False
         self.currentStatus = 0 #0 is alive, 1 is collided 2 is toDestroy
