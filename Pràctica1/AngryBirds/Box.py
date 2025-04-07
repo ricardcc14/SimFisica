@@ -32,9 +32,13 @@ class Box:
         position:b2.b2Vec2 = utils.worldToPixel(self.body.position.copy())
         position.y = screen.get_height()-position.y
         
-        pygame.draw.rect(screen, "lightgray", (position.x-self.w/2, position.y-self.h/2, self.w, self.h))
-        pygame.draw.rect(screen, "black", (position.x-self.w/2, position.y-self.h/2, self.w, self.h), 1)
-        pass
+        current_texture = self.images[self.currentStatus]
+    
+        if current_texture.get_size() != (self.w, self.h):
+            current_texture = pygame.transform.scale(current_texture, (int(self.w), int(self.h)))
+            
+        screen.blit(current_texture, (position.x - self.w/2, position.y - self.h/2))
+        
 
     def update(self):
         pass

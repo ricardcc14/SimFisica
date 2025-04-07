@@ -36,8 +36,7 @@ class Pig:
         position:b2.b2Vec2 = utils.worldToPixel(self.body.position.copy())
         position.y = screen.get_height()-position.y
 
-        pygame.draw.circle(screen, 'white', position, self.radius)
-        pygame.draw.circle(screen, 'black', position, self.radius, 1)
+        utils.drawRotatedImage(screen, self.images[self.currentStatus], position, self.radius*2, self.radius*2, self.body.angle)
         pass
 
     def update(self, world):

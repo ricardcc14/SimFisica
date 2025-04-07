@@ -45,7 +45,7 @@ class LevelManager:
         self.bird_slot_size = (50, 50)
         self.bird_slot_spacing = 60
         self.birdsAvailable:list = []
-        self.currentBirdSprite = None
+        self.currentBirdSprite = []
         self.selectedBirdIndex = None
         self.boxes:list[Box] = []
         self.circles:list[Circle] = []
@@ -56,6 +56,10 @@ class LevelManager:
         self.basicBird.append(pygame.image.load("assets/BasicBird.png"))
         self.basicBird.append(pygame.image.load("assets/BasicBirdCollided.png"))
         self.basicBird.append(pygame.image.load("assets/BasicBirdDisappear.png"))
+
+        self.basicPig = []
+        self.basicPig.append(pygame.image.load("assets/pigs/basicMedium/1.png"))
+
 
         self.bkgSky = pygame.image.load("assets/sky.png")
         self.bkgFloor = pygame.image.load("assets/floor.png")
@@ -85,10 +89,10 @@ class LevelManager:
         pigs_data = level_data.get("pigs", [])
         for (pig_type, pig_info) in pigs_data.items():
             if pig_type == "king":
-                pig = Pig(self.world, pig_info["x"], pig_info["y"], pig_info["r"], None)
+                pig = Pig(self.world, pig_info["x"], pig_info["y"], pig_info["r"], self.basicPig)
                 self.pigs.append(pig)
             else:
-                pig = Pig(self.world, pig_info["x"], pig_info["y"], pig_info["r"], None)
+                pig = Pig(self.world, pig_info["x"], pig_info["y"], pig_info["r"], self.basicPig)
                 self.pigs.append(pig)
         
     
@@ -98,9 +102,9 @@ class LevelManager:
             type = structure["type"]
             
             blockSprites = []
-            blockSprites.append("assets/blocks/" + material + "/" + type + "/1.png")
-            blockSprites.append("assets/blocks/" + material + "/" + type + "/2.png")
-            blockSprites.append("assets/blocks/" + material + "/" + type + "/3.png")
+            blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/1.png"))
+            blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/2.png"))
+            blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/3.png"))
             
             if type == "box":
         
@@ -114,8 +118,8 @@ class LevelManager:
                     box = Box(self.world, structure["x"], structure["y"], structure["w"], structure["h"], blockSprites)
                 
                 # Configurar angle si existeix
-                #if "angle" in structure:
-                    #box.body.angle = math.radians(structure["angle"])
+                if "angle" in structure:
+                    box.body.angle = numpy.radians(structure["angle"])
                 
                 self.boxes.append(box)
                 
@@ -195,7 +199,7 @@ class LevelManager:
             
         
         if self.levelState == self.STATE_BIRD_SELECTED:
-            self.screen.blit(self.currentBirdSprite, (self.catapult_origin.x-25, self.screen.get_height()-self.catapult_origin.y-25))
+            self.screen.blit(self.currentBirdSprite[0], (self.catapult_origin.x-25, self.screen.get_height()-self.catapult_origin.y-25))
         elif self.levelState == self.STATE_CHARGING:
             mouse_pos = pygame.mouse.get_pos()
             pygame.draw.line(self.screen, "crimson", self.origin, mouse_pos)
@@ -228,12 +232,10 @@ class LevelManager:
     def throwBird(self, origin, end):
         direction = origin - end
 
-        #self.birds.append(Bird(self.world, origin.x, self.screen.get_height()-origin.y, 25, self.basicBird))
-        self.birds.append(Bird(self.world, 190, self.screen.get_height()-370, 25, self.basicBird))
+        self.birds.append(Bird(self.world, 190, self.screen.get_height()-370, 25, self.currentBirdSprite))
         self.birds[-1].setLinearVelocity(direction.x, -direction.y)
         self.birdsAvailable.pop(self.selectedBirdIndex)
         self.selectedBirdIndex = None
-        self.currentBirdSprite = None
         self.levelState = self.STATE_BIRD_FLYING
         self.levelState = self.STATE_NO_BIRD_SELECTED
         pass
@@ -245,7 +247,10 @@ class LevelManager:
             print(self.birdsAvailable)
             for i, area in enumerate(self.bird_area):
                 if area.collidepoint(mouse_pos):
-                    self.currentBirdSprite = pygame.image.load(self.birdsAvailable[i])
+                    self.currentBirdSprite.clear()
+                    self.currentBirdSprite.append(pygame.image.load(self.birdsAvailable[i]))
+                    self.currentBirdSprite.append(pygame.image.load(self.birdsAvailable[i].replace(".png", "_collided.png")))
+                    self.currentBirdSprite.append(pygame.image.load(self.birdsAvailable[i].replace(".png", "_disappear.png")))
                     self.selectedBirdIndex = i
                     self.levelState = self.STATE_BIRD_SELECTED
                     return
@@ -257,6 +262,17 @@ class LevelManager:
                 self.levelState = self.STATE_CHARGING
                 self.origin = b2.b2Vec2(mouse_pos)
                 self.mouse_pressed = True
+
+            else :
+                for i, area in enumerate(self.bird_area):
+                    if area.collidepoint(mouse_pos):
+                        self.currentBirdSprite.clear()
+                        self.currentBirdSprite.append(pygame.image.load(self.birdsAvailable[i]))
+                        self.currentBirdSprite.append(pygame.image.load(self.birdsAvailable[i].replace(".png", "_collided.png")))
+                        self.currentBirdSprite.append(pygame.image.load(self.birdsAvailable[i].replace(".png", "_disappear.png")))
+                        self.selectedBirdIndex = i
+                        self.levelState = self.STATE_BIRD_SELECTED
+                        return
         #elif self.levelState == self.STATE_BIRD_FLYING:
          #   if self.birds:
           #      self.birds[-1].activateHability()
