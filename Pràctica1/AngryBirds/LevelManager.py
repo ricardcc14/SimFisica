@@ -3,6 +3,7 @@ import pygame
 import numpy
 import Box2D as b2
 from Bird import Bird
+from Big import Big
 from Box import Box
 from WoodBox import WoodBox
 from GlassBox import GlassBox
@@ -246,8 +247,11 @@ class LevelManager:
         if direction.length > max_launch_force:
             direction.Normalize()
             direction *= max_launch_force
-
-        self.birds.append(Bird(self.world, 190, self.screen.get_height()-370, 25, self.currentBirdSprite))
+        if self.birdsAvailable[self.selectedBirdIndex] == "assets/birds/big/bird_big.png":
+            self.birds.append(Big(self.world, 190, self.screen.get_height()-370, 25, self.currentBirdSprite))
+            
+        else:
+            self.birds.append(Bird(self.world, 190, self.screen.get_height()-370, 25, self.currentBirdSprite))
         self.birds[-1].setLinearVelocity(direction.x, -direction.y)
         self.birdsAvailable.pop(self.selectedBirdIndex)
         self.selectedBirdIndex = None

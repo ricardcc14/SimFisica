@@ -2,7 +2,7 @@
 {
     "id": 1,
     "catapult_pos": { "x": 100, "y": 100 },
-    "birds": ["red", "blue", "red", "blue"],
+    "birds": ["red", "big", "red", "big"],
     "pigs": {
         "king": { "x": 800, "y": 400, "r": 100 },
         "basic": { "x": 500, "y": 300, "r": 100 }
