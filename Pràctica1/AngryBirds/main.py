@@ -21,8 +21,8 @@ screen = pygame.display.set_mode((1200, 600))
 clock = pygame.time.Clock()
 frames = 120
 running = True
-scene = "start" #start, menu, lvl_1, lvl_2, lvl_3
-
+scene = "start" #start, menu, lvl_1, lvl_2, lvl_3, lvl_end
+currentlevel = 0
 
 # Managers initialization
 levelManager = LevelManager(screen)
@@ -33,7 +33,6 @@ origin = b2.b2Vec2(0,0)
 while running:
     screen.fill('gray')
     pygame.display.set_caption('Angry Birds')
-
 
     # Event handling
     for event in pygame.event.get():
@@ -49,16 +48,19 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN and scene == "menu":
             if view.level_1_button.isClicked(pygame.mouse.get_pos()):
                 scene = "lvl_1"
-                levelNum = 1
-                levelManager.loadLevel(levelNum)
+                currentlevel = 1
+                levelManager.loadLevel(currentlevel)
             elif view.level_2_button.isClicked(pygame.mouse.get_pos()):
                 scene = "lvl_2"
-                levelNum = 2
-                levelManager.loadLevel(levelNum)
+                currentlevel= 2
+                levelManager.loadLevel(currentlevel)
             elif view.level_3_button.isClicked(pygame.mouse.get_pos()):
                 scene = "lvl_3"
-                levelNum = 3
-                levelManager.loadLevel(levelNum)
+                currentlevel = 3
+                levelManager.loadLevel(currentlevel)
+            elif view.back_menu_button.isClicked(pygame.mouse.get_pos()):
+                scene = "start"
+            
 
         # Level screen events
         elif event.type == pygame.MOUSEBUTTONDOWN and (scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3"):
@@ -67,7 +69,22 @@ while running:
         elif event.type == pygame.MOUSEBUTTONUP and (scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3"):
             mouse_pos = b2.b2Vec2(event.pos[0], event.pos[1])
             levelManager.handleMouseUp(mouse_pos)
-        
+        #elif event.type == pygame.MOUSEBUTTONDOWN and view.back_lvl_button.isClicked(pygame.mouse.get_pos()) and (scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3"):
+            #scene = "menu"
+
+        # End level screen events
+        elif event.type == pygame.MOUSEBUTTONDOWN and scene == "lvl_end":
+            if view.end_menu_button.isClicked(pygame.mouse.get_pos()):
+                scene = "menu"
+
+            elif view.end_repeat_button.isClicked(pygame.mouse.get_pos()):
+                scene = "lvl_"+str(currentlevel)
+                levelManager.loadLevel(currentlevel)
+
+            elif view.end_next_button.isClicked(pygame.mouse.get_pos()):
+                currentlevel = currentlevel + 1
+                scene = "lvl"+str(currentlevel)
+                levelManager.loadLevel(currentlevel)
 
     if scene == "start":
         view.drawStart()
@@ -76,6 +93,9 @@ while running:
     elif scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3":
         levelManager.runLevel()
         view.drawLevel(levelManager)
+    elif scene == "lvl_end":
+        #view.drawEndLevel(last_level, stars, points)
+        view.drawEndLevel(currentlevel,1,23)
 
     pygame.display.flip()
     clock.tick(frames)
