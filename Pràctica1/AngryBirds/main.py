@@ -32,6 +32,8 @@ origin = b2.b2Vec2(0,0)
 
 while running:
     screen.fill('gray')
+    pygame.display.set_caption('Angry Birds')
+
 
     # Event handling
     for event in pygame.event.get():
