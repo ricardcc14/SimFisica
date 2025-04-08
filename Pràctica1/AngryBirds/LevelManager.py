@@ -157,7 +157,7 @@ class LevelManager:
     def runLevel(self):
 
         
-        print("Level State", self.levelState)
+        #print("Level State", self.levelState)
         # RENDER YOUR GAME HERE
         self.world.Step(self.time_step, self.vel_iters, self.pos_iters)
         
@@ -180,6 +180,8 @@ class LevelManager:
         
     
     def draw(self):
+        if self.birds != []:
+            print("Bird pos: ", self.birds[-1].body.position.x)
         utils.drawRotatedImage(self.screen, self.bkgSky, b2.b2Vec2(self.screen.get_width()/2, self.screen.get_height()/2), self.screen.get_width(), self.screen.get_height(), 0)
         utils.drawRotatedImage(self.screen, self.bkgFloor, b2.b2Vec2(self.screen.get_width()/2, self.screen.get_height()/2+45), self.screen.get_width(), self.screen.get_height(), 0)
 
@@ -202,7 +204,14 @@ class LevelManager:
             self.screen.blit(self.currentBirdSprite[0], (self.catapult_origin.x-25, self.screen.get_height()-self.catapult_origin.y-25))
         elif self.levelState == self.STATE_CHARGING:
             mouse_pos = pygame.mouse.get_pos()
-            pygame.draw.line(self.screen, "crimson", self.origin, mouse_pos)
+            direction = pygame.math.Vector2(self.origin) - pygame.math.Vector2(mouse_pos)
+
+            max_length = 200
+            if direction.length() > max_length:
+                direction.scale_to_length(max_length)
+
+            limited_mouse_pos = (self.origin[0] - direction.x, self.origin[1] - direction.y)
+            pygame.draw.line(self.screen, "crimson", self.origin, limited_mouse_pos)
 
         for i, bird in enumerate(self.birds):
             if(bird.isRemoved):
@@ -232,6 +241,12 @@ class LevelManager:
     def throwBird(self, origin, end):
         direction = origin - end
 
+        max_launch_force = 200 
+
+        if direction.length > max_launch_force:
+            direction.Normalize()
+            direction *= max_launch_force
+
         self.birds.append(Bird(self.world, 190, self.screen.get_height()-370, 25, self.currentBirdSprite))
         self.birds[-1].setLinearVelocity(direction.x, -direction.y)
         self.birdsAvailable.pop(self.selectedBirdIndex)
@@ -242,7 +257,7 @@ class LevelManager:
 
     def handleMouseDown(self, mouse_pos):
         print("MouseDown")
-        if self.levelState == self.STATE_NO_BIRD_SELECTED and self.birds == []:
+        if (self.levelState == self.STATE_NO_BIRD_SELECTED and self.birds == []) or (self.levelState == self.STATE_NO_BIRD_SELECTED and self.birds[-1].body.position.x >= 12):
             
             print(self.birdsAvailable)
             for i, area in enumerate(self.bird_area):
