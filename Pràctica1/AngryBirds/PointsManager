@@ -1,0 +1,85 @@
+import utils
+import pygame
+import numpy as np
+import Box2D as b2
+
+#Gestor de punts, que guarda la informació de cada nivell en un array de diccionaris. 
+class PointsManager:
+
+    #Funció per inicialitzar el gestor de puntuacions amb els nivells buits
+    def __init__ (self, numLevels):
+        self.levels_points = []
+        self.currentLevel = None
+
+        for i in range(1, numLevels):
+            level = {
+                "number" : i,
+                "points" : 0,
+                "stars": 0,
+                "pigs_tokill" : 0,
+                "pigs_killed" : 0,
+                "level_passed" : False,
+                "th_1_stars" : 0,
+                "th_2_stars" : 0,
+                "th_3_stars" : 0
+            }
+            
+        self.levels_points.append(level)
+
+    #Funció per definir quin és el nivell actual
+    def setCurrentLevel(self, currentLevel):
+        self.currentLevel = currentLevel
+
+    #Funció per reinicialitzar els valors del nivell actual
+    def restartCurrentLevel(self, pigstoKill, th_1_stars, th_2_stars, th_3_stars):
+        level = {
+                "number" : self.currentLevel,
+                "points" : 0,
+                "stars": 0,
+                "pigs_tokill" : pigstoKill,
+                "pigs_killed" : 0,
+                "level_passed" : False,
+                "th_1_stars" : th_1_stars,
+                "th_2_stars" : th_2_stars,
+                "th_3_stars" : th_3_stars        
+        }
+
+        self.levels_points[0] = level
+
+    #Funció per afegir nous punts al nivell, indicant si els punts són donats per algun enemic eliminat
+    def addPoints(self, newPoints, pigIsKilled):
+        self.levels_points[self.currentLevel]["points"] += newPoints
+        self.levels_points[self.currentLevel]["stars"] = self.getCurrentStars(self.currentLevel)
+
+        if (pigIsKilled == True):
+            self.levels_points[self.currentLevel]["pigs_killed"] += 1
+     
+
+            if (self.levels_points[self.currentLevel]["pigs_killed"] == self.levels_points[self.currentLevel]["pigs_tokill"]):
+                self.levels_points[self.currentLevel]["level_passed"] = True
+
+
+    #Funció per saber quantes estrelles té el nivell seleccionat
+    def getCurrentStars(self, currentLevel):
+        currentPoints = self.levels_points[currentLevel]["points"]
+
+        if (currentPoints < self.levels_points[currentLevel]["th_1_stars"]):
+            return 0
+
+        if (currentPoints >= self.levels_points[currentLevel]["th_1_stars"] and currentPoints < self.levels_points[currentLevel]["th_2_stars"]):
+            return 1
+        
+        if (currentPoints >= self.levels_points[currentLevel]["th_2_stars"] and currentPoints < self.levels_points[currentLevel]["th_3_stars"]):
+            return 2
+
+        if(currentPoints >= self.levels_points[currentLevel]["th_3_stars"]):
+            return 3
+
+
+    #Funció per comprovar si el nivell actual s'ha completat
+    def checkIfCurrentLevelIsPassed(self):
+        return self.levels_points[self.currentLevel]["level_passed"]
+
+
+
+
