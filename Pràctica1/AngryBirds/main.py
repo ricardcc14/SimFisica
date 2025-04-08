@@ -13,6 +13,7 @@ from Surface import Surface
 from Bird import Bird
 from Box import Box
 from Pig import Pig
+from Button import Button
 
 # pygame setup
 pygame.init()
@@ -39,26 +40,25 @@ while running:
 
         # Start screen events
         elif event.type == pygame.MOUSEBUTTONDOWN and scene == "start":
-            if view.play_button.collidepoint(pygame.mouse.get_pos()):
+            if view.play_button.isClicked(pygame.mouse.get_pos()):
                 scene = "menu"
 
         # Menu screen events
         elif event.type == pygame.MOUSEBUTTONDOWN and scene == "menu":
-            if view.level_1_button.collidepoint(pygame.mouse.get_pos()):
+            if view.level_1_button.isClicked(pygame.mouse.get_pos()):
                 scene = "lvl_1"
                 levelNum = 1
                 levelManager.loadLevel(levelNum)
-            elif view.level_2_button.collidepoint(pygame.mouse.get_pos()):
+            elif view.level_2_button.isClicked(pygame.mouse.get_pos()):
                 scene = "lvl_2"
                 levelNum = 2
                 levelManager.loadLevel(levelNum)
-            elif view.level_3_button.collidepoint(pygame.mouse.get_pos()):
+            elif view.level_3_button.isClicked(pygame.mouse.get_pos()):
                 scene = "lvl_3"
                 levelNum = 3
                 levelManager.loadLevel(levelNum)
 
         # Level screen events
-        
         elif event.type == pygame.MOUSEBUTTONDOWN and (scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3"):
             mouse_pos = b2.b2Vec2(event.pos[0], event.pos[1])
             levelManager.handleMouseDown(mouse_pos)
