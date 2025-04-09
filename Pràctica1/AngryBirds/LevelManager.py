@@ -295,4 +295,7 @@ class LevelManager:
             box.destroy(self.world)
         for pig in self.pigs:
             pig.destroy(self.world)
+        for bird in self.birds:
+            bird.destroy(self.world)
+
 
