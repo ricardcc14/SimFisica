@@ -98,11 +98,11 @@ while running:
         view.drawMenu()
     elif scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3":
         levelManager.runLevel()
-        if(pointsManager.checkIfLevelIsPassed(currentlevel_index)):
-            scene = "lvl_end"
-            view.drawEndLevel(currentlevel, pointsManager.getStars(currentlevel_index), pointsManager.getPoints(currentlevel_index))
-        else:
-            view.drawLevel(levelManager, pointsManager.getPoints(currentlevel_index))
+        #if(pointsManager.checkIfLevelIsPassed(currentlevel_index)):
+        #    scene = "lvl_end"
+        #    view.drawEndLevel(currentlevel, pointsManager.getStars(currentlevel_index), pointsManager.getPoints(currentlevel_index))
+        #else:
+        view.drawLevel(levelManager, pointsManager.getPoints(currentlevel_index))
     elif scene == "lvl_end":
         view.drawEndLevel(currentlevel, pointsManager.getStars(currentlevel_index), pointsManager.getPoints(currentlevel_index))
 

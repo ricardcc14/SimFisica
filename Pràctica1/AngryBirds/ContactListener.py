@@ -22,6 +22,25 @@ class ContactListener(b2.b2ContactListener):
         o2 = body2.userData
 
         # Bird Collisions
+        if isinstance(o2, Bird): 
+            o1, o2 = o2, o1
+        
+        if isinstance(o1, Bird) and isinstance(o2, Box):
+            print("xoquen bird box!")
+            o1.birdCollided()
+            self.pointsManager.addPoints(10, False)
+
+        if isinstance(o1, Bird) and isinstance(o2, Pig):
+            print("xoquen bird pig!")
+            o1.birdCollided()
+            o2.pigCollided()
+            self.pointsManager.addPoints(100, True)
+
+        if isinstance(o1, Bird) and isinstance(o2, Surface):
+            print("xoquen bird surface!")
+            o1.birdCollided()
+            self.pointsManager.addPoints(50, False)
+        '''
         if(type(o2) == Bird): 
             o1, o2 = o2, o1
         
@@ -40,13 +59,14 @@ class ContactListener(b2.b2ContactListener):
             print("xoquen bird surface!")
             o1.birdCollided()
             self.pointsManager.addPoints(50, False)
+        '''
 
 
         # Pig Collisions - Excluding Bird
-        if(type(o2) == Pig): 
+        if isinstance(o2, Pig): 
             o1, o2 = o2, o1
 
-        if(type(o1) == Pig and type(o2) == Surface):
+        if isinstance(o1, Pig) and isinstance(o2, Surface):
             print("xoquen pig surface!")
             o1.pigCollided()
             self.pointsManager.addPoints(250, True)
