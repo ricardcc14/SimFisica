@@ -18,7 +18,7 @@
             "angle": 30
         }, {
             "type": "box",
-            "material": "stone",
+            "material": "wood",
             "x": 400,
             "y": 201,
             "w": 100,
@@ -27,7 +27,7 @@
         },
         {
             "type": "box",
-            "material": "glass",
+            "material": "wood",
             "x": 550,
             "y": 101,
             "w": 100,
@@ -49,7 +49,7 @@
     "blocks": [
         {
             "type": "box",
-            "material": "wood",
+            "material": "glass",
             "x": 400,
             "y": 400,
             "w": 100,
@@ -57,7 +57,7 @@
             "angle": 30
         }, {
             "type": "box",
-            "material": "stone",
+            "material": "glass",
             "x": 400,
             "y": 500,
             "w": 100,
