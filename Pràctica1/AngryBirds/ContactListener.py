@@ -34,9 +34,9 @@ class ContactListener(b2.b2ContactListener):
 
         if isinstance(o1, Bird) and isinstance(o2, Pig):
             print("xoquen bird pig!")
-            #sound = pygame.mixer.Sound("assets/ui/music/pig-damage.mp3")
-            #sound.set_volume(0.3)  
-            #sound.play()
+            sound = pygame.mixer.Sound("assets/ui/music/pig-damage.mp3")
+            sound.set_volume(0.3)  
+            sound.play()
             o1.birdCollided()
             o2.pigCollided()
             self.pointsManager.addPoints(100, True)
