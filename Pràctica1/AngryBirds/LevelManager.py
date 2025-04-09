@@ -54,7 +54,6 @@ class LevelManager:
         self.circles:list[Circle] = []
         self.pigs:list[Pig] = []
 
-
         self.basicBird = []
         self.basicBird.append(pygame.image.load("assets/BasicBird.png"))
         self.basicBird.append(pygame.image.load("assets/BasicBirdCollided.png"))
@@ -63,13 +62,14 @@ class LevelManager:
         self.basicPig = []
         self.basicPig.append(pygame.image.load("assets/pigs/basicMedium/1.png"))
 
-
         self.bkgSky = pygame.image.load("assets/sky.png")
         self.bkgFloor = pygame.image.load("assets/floor.png")
 
         self.surface = Surface(self.world, self.screen.get_width()/2, 100, self.screen.get_width()*2, 5)
 
     def loadLevel(self, level_id):
+
+        #Llegir informació del JSON
         level_data = []
         data = utils.readJson('levels.json')
         for i, level in enumerate(data):
@@ -77,12 +77,12 @@ class LevelManager:
                 level_data = level
                 break
 
+        #Esborrar assets en memòria
         self.birdsAvailable.clear()
         self.pigs.clear()
         self.boxes.clear()
         self.circles.clear()
         self.birds.clear()
-
             
         #Load Birds
         for bird in level_data["birds"]:
@@ -98,7 +98,6 @@ class LevelManager:
                 pig = Pig(self.world, pig_info["x"], pig_info["y"], pig_info["r"], self.basicPig)
                 self.pigs.append(pig)
         
-    
         #Load Structures
         for structure in level_data["blocks"]:
             material = structure["material"]
@@ -110,7 +109,6 @@ class LevelManager:
             blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/3.png"))
             
             if type == "box":
-        
                 if material == "wood":
                     box = WoodBox(self.world, structure["x"], structure["y"], structure["w"], structure["h"], blockSprites)
                 elif material == "stone":
@@ -145,28 +143,14 @@ class LevelManager:
             x = self.bird_slot_size[0] + i * self.bird_slot_spacing
             y = self.bird_slot_size[1]
             self.bird_area.append(pygame.Rect(x, y, self.bird_slot_size[0], self.bird_slot_size[1]))
-
-
+ 
         #Points system
         self.pointsManager.restartLevel(level_id-1, len(self.pigs), 100, 10000, 20000)
 
-
-
         return True
 
-        # birds.append(Bird(world, 300, 300, 25, basicBird))
-
-       #self.boxes.append(Box(self.world, 0, 200, 100, 100, None, "wood"))
-       #self.boxes.append(Box(self.world, 1000, 300, 100, 100, None, "wood"))
-       #self.boxes.append(Box(self.world, 1000, 400, 100, 100, None, "wood"))
-
-       #self.pigs.append(Pig(self.world, 1000, 500, 50, None))
-                    
                     
     def runLevel(self):
-
-        
-        #print("Level State", self.levelState)
         # RENDER YOUR GAME HERE
         self.world.Step(self.time_step, self.vel_iters, self.pos_iters)
         
@@ -197,7 +181,6 @@ class LevelManager:
         #if(mouse_pressed): pygame.draw.line(self.screen, "crimson", origin, pygame.mouse.get_pos())
         utils.drawRotatedImage(self.screen, self.slingshotSprites[0], b2.b2Vec2(200, 415), 34, 160, 0)
        
-
         for i, bird_img in enumerate(self.birdsAvailable):
         # Dibuixar el slot (opcional)
             pygame.draw.rect(self.screen, (200, 200, 200, 128), self.bird_area[i], 2)
@@ -317,3 +300,5 @@ class LevelManager:
 
         distance = numpy.sqrt((pos[0] - origin_screen[0])**2 + (pos[1] - origin_screen[1])**2)
         return distance < 100
+    
+
