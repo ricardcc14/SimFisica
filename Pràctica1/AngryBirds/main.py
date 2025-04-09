@@ -15,6 +15,7 @@ from Box import Box
 from Pig import Pig
 from Button import Button
 
+
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((1200, 600))
@@ -31,6 +32,12 @@ levelManager = LevelManager(screen, pointsManager)
 
 view = View(screen, levelManager)
 origin = b2.b2Vec2(0,0)
+
+pygame.mixer.init()
+sound = pygame.mixer.Sound("assets/ui/music/AngryBirdsMusic.mp3")
+sound.set_volume(0.1)  
+sound.play()
+
 
 while running:
     screen.fill('gray')
