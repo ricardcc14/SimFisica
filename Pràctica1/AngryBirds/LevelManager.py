@@ -3,6 +3,7 @@ import pygame
 import numpy
 import Box2D as b2
 from Bird import Bird
+from Red import Red
 from Big import Big
 from Box import Box
 from WoodBox import WoodBox
@@ -44,21 +45,18 @@ class LevelManager:
         self.mouse_pressed = False
 
         self.birds:list[Bird] = []
+        # Area de selecció d'ocells
         self.bird_area = []
         self.bird_slot_size = (50, 50)
         self.bird_slot_spacing = 60
+        # LLista amb els ocells diponibles
         self.birdsAvailable:list = []
+        # Llista amb el sprite l'ocell seleccionat
         self.currentBirdSprite = []
         self.selectedBirdIndex = None
         self.boxes:list[Box] = []
         self.circles:list[Circle] = []
         self.pigs:list[Pig] = []
-
-
-        self.basicBird = []
-        self.basicBird.append(pygame.image.load("assets/BasicBird.png"))
-        self.basicBird.append(pygame.image.load("assets/BasicBirdCollided.png"))
-        self.basicBird.append(pygame.image.load("assets/BasicBirdDisappear.png"))
 
         self.basicPig = []
         self.basicPig.append(pygame.image.load("assets/pigs/basicMedium/1.png"))
@@ -153,14 +151,6 @@ class LevelManager:
 
 
         return True
-
-        # birds.append(Bird(world, 300, 300, 25, basicBird))
-
-       #self.boxes.append(Box(self.world, 0, 200, 100, 100, None, "wood"))
-       #self.boxes.append(Box(self.world, 1000, 300, 100, 100, None, "wood"))
-       #self.boxes.append(Box(self.world, 1000, 400, 100, 100, None, "wood"))
-
-       #self.pigs.append(Pig(self.world, 1000, 500, 50, None))
                     
                     
     def runLevel(self):
@@ -170,27 +160,11 @@ class LevelManager:
         # RENDER YOUR GAME HERE
         self.world.Step(self.time_step, self.vel_iters, self.pos_iters)
         
-        '''
-        if self.levelState == self.STATE_BIRD_FLYING:
-            birds_stopped = True
-            for bird in self.birds:
-                if not bird.hasStopped():
-                    birds_stopped = False
-                    break
-            
-            if birds_stopped and not any(not pig.isRemoved for pig in self.pigs):
-                # Tots els ocells han acabat i no queden porcs
-                print("Nivell completat!")
-            elif birds_stopped:
-                # Tots els ocells han acabat però queden porcs
-                self.levelState = self.STATE_NO_BIRD_SELECTED
-        '''
 
         
     
     def draw(self):
-        if self.birds != []:
-            print("Bird pos: ", self.birds[-1].body.position.x)
+        
         utils.drawRotatedImage(self.screen, self.bkgSky, b2.b2Vec2(self.screen.get_width()/2, self.screen.get_height()/2), self.screen.get_width(), self.screen.get_height(), 0)
         utils.drawRotatedImage(self.screen, self.bkgFloor, b2.b2Vec2(self.screen.get_width()/2, self.screen.get_height()/2+45), self.screen.get_width(), self.screen.get_height(), 0)
 
@@ -224,6 +198,7 @@ class LevelManager:
 
         for i, bird in enumerate(self.birds):
             if(bird.isRemoved):
+            
                 self.birds.pop(i)
             else:
                 bird.update(self.world)
@@ -256,10 +231,10 @@ class LevelManager:
             direction.Normalize()
             direction *= max_launch_force
         if self.birdsAvailable[self.selectedBirdIndex] == "assets/birds/big/bird_big.png":
-            self.birds.append(Big(self.world, 190, self.screen.get_height()-370, 25, self.currentBirdSprite))
+            self.birds.append(Big(self.world, 190, self.screen.get_height()-370, self.currentBirdSprite))
             
         else:
-            self.birds.append(Bird(self.world, 190, self.screen.get_height()-370, 25, self.currentBirdSprite))
+            self.birds.append(Red(self.world, 190, self.screen.get_height()-370, self.currentBirdSprite))
         self.birds[-1].setLinearVelocity(direction.x, -direction.y)
         self.birdsAvailable.pop(self.selectedBirdIndex)
         self.selectedBirdIndex = None

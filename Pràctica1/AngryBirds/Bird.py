@@ -37,8 +37,7 @@ class Bird:
     def draw(self, screen:pygame.Surface):
         position:b2.b2Vec2 = utils.worldToPixel(self.body.position.copy())
         position.y = screen.get_height()-position.y
-
-        utils.drawRotatedImage(screen, self.images[self.currentStatus], position, self.radius*2, self.radius*2, self.body.angle)
+        utils.drawRotatedImage(screen, pygame.transform.scale(self.images[self.currentStatus], (self.radius*2, self.radius*2)), position, self.radius*2, self.radius*2, self.body.angle)
         pass
 
     def update(self, world):
