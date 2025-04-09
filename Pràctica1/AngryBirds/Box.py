@@ -41,34 +41,10 @@ class Box:
         
 
     def update(self, world):
-        '''
         if self.collided:
             if self.currentStatus < 3:
-                self.currentStatus = self.currentStatus+1
-                self.setLinearVelocity(0, 0)
-                self.setAngularVelocity(0)
-            
-            if self.currentStatus == 3: 
-                self.destroy(world)
-                
-        pass
-        '''
-        if self.collided:
-            seconds = time.time()
-
-        # Iniciem el temporitzador només una vegada
-            if self.timer == 0:
-                self.prevSec = seconds
-                self.timer = 1
-
-            elapsed = seconds - self.prevSec
-
-            if self.currentStatus < 3:
-                # Canviem d’estat només un cop per segon (ajusta si vols més ràpid/lent)
-                if elapsed > 0.3:
                     self.currentStatus += 1
                     self.collided = False
-                    self.prevSec = seconds  # Resetejem el temps per la següent transició
                     self.setLinearVelocity(0, 0)
                     self.setAngularVelocity(0)
 

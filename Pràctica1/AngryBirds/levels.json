@@ -4,6 +4,45 @@
     "catapult_pos": { "x": 100, "y": 100 },
     "birds": ["red", "big", "red", "big"],
     "pigs": {
+        "king": { "x": 800, "y": 400, "r": 50 },
+        "basic": { "x": 500, "y": 400, "r": 50 }
+    },
+    "blocks": [
+        {
+            "type": "box",
+            "material": "wood",
+            "x": 400,
+            "y": 101,
+            "w": 100,
+            "h": 100,
+            "angle": 30
+        }, {
+            "type": "box",
+            "material": "stone",
+            "x": 400,
+            "y": 201,
+            "w": 100,
+            "h": 100,
+            "angle": 0
+        },
+        {
+            "type": "box",
+            "material": "glass",
+            "x": 550,
+            "y": 101,
+            "w": 100,
+            "h": 100,
+            "angle": 0
+        }
+
+    ],
+    "punctuation": { "3stars": 100, "2stars": 50, "1star": 25 }
+},
+{
+    "id": 1,
+    "catapult_pos": { "x": 100, "y": 100 },
+    "birds": ["red", "big", "red", "big"],
+    "pigs": {
         "king": { "x": 800, "y": 400, "r": 100 },
         "basic": { "x": 500, "y": 300, "r": 100 }
     },
@@ -37,33 +76,6 @@
 
     ],
     "punctuation": { "3stars": 100, "2stars": 50, "1star": 25 }
-},
-{
-    "id": 2,
-    "catapult_pos": { "x": 120, "y": 120 },
-    "birds": ["yellow", "red", "blue"],
-    "pigs": {
-        "king": { "x": 200, "y": 150, "r": 15 }
-    },
-    "blocks": [
-        {
-            "type": "box",
-            "material": "stone",
-            "x": 150,
-            "y": 150,
-            "w": 100,
-            "h": 100,
-            "angle": 10
-        },
-        {
-            "type": "circle",
-            "material": "wood",
-            "x": 170,
-            "y": 130,
-            "r": 40
-        }
-    ],
-    "punctuation": { "3stars": 200, "2stars": 100, "1star": 50 }
 }
 ]
     

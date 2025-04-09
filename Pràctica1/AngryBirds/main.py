@@ -85,7 +85,7 @@ while running:
             levelManager.handleMouseUp(mouse_pos)
         elif event.type == pygame.MOUSEBUTTONDOWN and view.back_lvl_button.isClicked(pygame.mouse.get_pos()) and (scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3"):
             scene = "menu"
-            print("ei")
+            levelManager.destroyAllObjects()
 
         # End level screen events
         elif view.end_menu_button.isClicked(pygame.mouse.get_pos()) and scene == "lvl_end" and event.type == pygame.MOUSEBUTTONDOWN:
@@ -106,6 +106,7 @@ while running:
         levelManager.runLevel()
         if(pointsManager.checkIfLevelIsPassed(currentlevel_index)):
             scene = "lvl_end"
+            levelManager.destroyAllObjects()
             view.drawEndLevel(currentlevel, pointsManager.getStars(currentlevel_index), pointsManager.getPoints(currentlevel_index))
         else:
             view.drawLevel(levelManager, pointsManager.getPoints(currentlevel_index))

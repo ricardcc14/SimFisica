@@ -290,3 +290,9 @@ class LevelManager:
         return distance < 100
     
 
+    def destroyAllObjects(self):
+        for box in self.boxes:
+            box.destroy(self.world)
+        for pig in self.pigs:
+            pig.destroy(self.world)
+
