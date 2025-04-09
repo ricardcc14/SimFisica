@@ -39,7 +39,7 @@
     "punctuation": { "3stars": 100, "2stars": 50, "1star": 25 }
 },
 {
-    "id": 1,
+    "id": 2,
     "catapult_pos": { "x": 100, "y": 100 },
     "birds": ["red", "big", "red", "big"],
     "pigs": {

@@ -24,7 +24,6 @@ frames = 120
 running = True
 scene = "start" #start, menu, lvl_1, lvl_2, lvl_3, lvl_end
 currentlevel = 0
-currentlevel_index = currentlevel - 1
 
 # Managers initialization
 pointsManager = PointsManager(3)
@@ -41,6 +40,7 @@ sound.play()
 while running:
     screen.fill('gray')
     pygame.display.set_caption('Angry Birds')
+    currentlevel_index = currentlevel - 1
 
     # Event handling
     for event in pygame.event.get():

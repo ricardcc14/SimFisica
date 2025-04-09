@@ -11,9 +11,9 @@ class PointsManager:
         self.levels_points = []
         self.currentLevel = None
 
-        for i in range(1, numLevels):
+        for i in range(numLevels):
             level = {
-                "number" : i,
+                "number" : i+1,
                 "points" : 0,
                 "stars": 0,
                 "pigs_tokill" : 0,
@@ -23,14 +23,13 @@ class PointsManager:
                 "th_2_stars" : 0,
                 "th_3_stars" : 0
             }
-            
-        self.levels_points.append(level)
+            self.levels_points.append(level)
 
     #Funció per reinicialitzar els valors del nivell actual
     def restartLevel(self, currentLevel, pigstoKill, th_1_stars, th_2_stars, th_3_stars):
         self.currentLevel = currentLevel
         level = {
-                "number" : currentLevel,
+                "number" : currentLevel+1,
                 "points" : 0,
                 "stars": 0,
                 "pigs_tokill" : pigstoKill,
@@ -41,10 +40,11 @@ class PointsManager:
                 "th_3_stars" : th_3_stars        
         }
 
-        self.levels_points[0] = level
+        self.levels_points[currentLevel] = level
 
     #Funció per afegir nous punts al nivell, indicant si els punts són donats per algun enemic eliminat
     def addPoints(self, newPoints, pigIsKilled):
+
         self.levels_points[self.currentLevel]["points"] += newPoints
         self.levels_points[self.currentLevel]["stars"] = self.getUpdatedStars(self.currentLevel)
 
