@@ -276,6 +276,10 @@ class LevelManager:
         if self.levelState == self.STATE_CHARGING:
             self.end = b2.b2Vec2(mouse_pos)
             self.throwBird(self.origin, self.end)
+
+            sound = pygame.mixer.Sound("assets/ui/music/flying-sound.mp3")
+            sound.set_volume(0.3)  
+            sound.play()
             
 
     def nearCatapult(self, pos):
