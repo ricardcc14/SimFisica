@@ -12,20 +12,22 @@ from Circle import Circle
 from Pig import Pig
 from Surface import Surface
 from ContactListener import ContactListener
+from PointsManager import PointsManager
 
 class LevelManager:
 
 
-    def __init__ (self, screen):
+    def __init__ (self, screen, pointsManager):
         self.levels_json = utils.readJson("levels.json")
         self.screen = screen
+        self.pointsManager = pointsManager
 
         self.frames = 60
         # Box2D
         self.world = b2.b2World()
         self.time_step = 1/self.frames
         self.vel_iters, self.pos_iters = 8, 3
-        contactListener = ContactListener()
+        contactListener = ContactListener(self.pointsManager)
         self.world.contactListener = contactListener
 
         #GESTIÓ D'ESTATS DEL NIVELL
@@ -143,6 +145,12 @@ class LevelManager:
             x = self.bird_slot_size[0] + i * self.bird_slot_spacing
             y = self.bird_slot_size[1]
             self.bird_area.append(pygame.Rect(x, y, self.bird_slot_size[0], self.bird_slot_size[1]))
+
+
+        #Points system
+        self.pointsManager.restartLevel(level_id-1, len(self.pigs), 100, 10000, 20000)
+
+
 
         return True
 

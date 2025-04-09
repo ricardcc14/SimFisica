@@ -49,19 +49,22 @@ class View:
         self.back_menu_button.draw(self.screen)
         pass
 
-    def drawLevel(self, levelManager):
+    def drawLevel(self, levelManager, points):
         levelManager.draw()
 
         points_title = py.transform.scale(py.image.load("assets/ui/titles/points_title.png"), (110, 30))
         self.screen.blit(points_title, (900, 30))
         self.back_lvl_button.draw(self.screen)
 
+        font = py.font.Font("assets/ui/font/angrybirds-regular.ttf", 30)
+        text = font.render(str(points), True, 'black')
+        text_points = text.get_rect(center=(950, 80))
+        self.screen.blit(text, text_points)
+
+
         pass
 
     def drawEndLevel(self, last_level, stars, points):
-
-        print("ei")
-
         self.screen.fill('white')
         end_lvl_bg = py.transform.scale(py.image.load("assets/ui/background/main_bg.png"), (self.screen.get_width(), self.screen.get_height()))
         self.screen.blit(end_lvl_bg, (0, 0))
