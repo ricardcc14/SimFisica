@@ -1,4 +1,3 @@
-
 #Libraries
 import pygame
 import Box2D as b2
@@ -72,14 +71,15 @@ while running:
                 scene = "start"
             
         # Level screen events
-        elif event.type == pygame.MOUSEBUTTONDOWN and (scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3"):
+        elif event.type == pygame.MOUSEBUTTONDOWN and (scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3") and (view.back_lvl_button.isClicked(pygame.mouse.get_pos()) == False):
             mouse_pos = b2.b2Vec2(event.pos[0], event.pos[1])
             levelManager.handleMouseDown(mouse_pos)
-        elif event.type == pygame.MOUSEBUTTONUP and (scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3"):
+        elif event.type == pygame.MOUSEBUTTONUP and (scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3") and (view.back_lvl_button.isClicked(pygame.mouse.get_pos()) == False):
             mouse_pos = b2.b2Vec2(event.pos[0], event.pos[1])
             levelManager.handleMouseUp(mouse_pos)
-        #elif event.type == pygame.MOUSEBUTTONDOWN and view.back_lvl_button.isClicked(pygame.mouse.get_pos()) and (scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3"):
-            #scene = "menu"
+        elif event.type == pygame.MOUSEBUTTONDOWN and view.back_lvl_button.isClicked(pygame.mouse.get_pos()) and (scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3"):
+            scene = "menu"
+            print("ei")
 
         # End level screen events
         elif view.end_menu_button.isClicked(pygame.mouse.get_pos()) and scene == "lvl_end" and event.type == pygame.MOUSEBUTTONDOWN:
@@ -87,14 +87,10 @@ while running:
         elif view.end_repeat_button.isClicked(pygame.mouse.get_pos()) and scene == "lvl_end" and event.type == pygame.MOUSEBUTTONDOWN:
             scene = "lvl_"+str(currentlevel)
             levelManager.loadLevel(currentlevel)
-            print("Restart")    
-
         elif view.end_next_button.isClicked(pygame.mouse.get_pos()) and scene == "lvl_end" and event.type == pygame.MOUSEBUTTONDOWN:
             currentlevel = currentlevel + 1
             scene = "lvl"+str(currentlevel)
             levelManager.loadLevel(currentlevel)
-            print("Next")
-
 
     if scene == "start":
         view.drawStart()
