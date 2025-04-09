@@ -28,6 +28,7 @@ class ContactListener(b2.b2ContactListener):
         if isinstance(o1, Bird) and isinstance(o2, Box):
             print("xoquen bird box!")
             o1.birdCollided()
+            o2.boxCollided()
             self.pointsManager.addPoints(10, False)
 
         if isinstance(o1, Bird) and isinstance(o2, Pig):

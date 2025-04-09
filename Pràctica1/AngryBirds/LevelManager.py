@@ -106,7 +106,7 @@ class LevelManager:
             blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/1.png"))
             blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/2.png"))
             blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/3.png"))
-            
+            blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/4.png"))
             if type == "box":
                 if material == "wood":
                     box = WoodBox(self.world, structure["x"], structure["y"], structure["w"], structure["h"], blockSprites)
@@ -200,7 +200,7 @@ class LevelManager:
             if(box.isRemoved):
                 self.boxes.pop(i)
             else:
-                box.update()
+                box.update(self.world)
                 box.draw(self.screen)
         
         for i, pig in enumerate(self.pigs):
@@ -236,7 +236,7 @@ class LevelManager:
 
     def handleMouseDown(self, mouse_pos):
         print("MouseDown")
-        if (self.levelState == self.STATE_NO_BIRD_SELECTED and self.birds == []) or (self.levelState == self.STATE_NO_BIRD_SELECTED and self.birds[-1].body.position.x >= 12):
+        if (self.levelState == self.STATE_NO_BIRD_SELECTED and self.birds == []) or (self.levelState == self.STATE_NO_BIRD_SELECTED and self.birds[-1].body.position.x >= 12) or (self.levelState == self.STATE_NO_BIRD_SELECTED and self.birds[-1].body.position.x < 0):
             
             print(self.birdsAvailable)
             for i, area in enumerate(self.bird_area):
