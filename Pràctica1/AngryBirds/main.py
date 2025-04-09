@@ -33,10 +33,10 @@ levelManager = LevelManager(screen, pointsManager)
 view = View(screen, levelManager)
 origin = b2.b2Vec2(0,0)
 
-pygame.mixer.init()
-sound = pygame.mixer.Sound("assets/ui/music/AngryBirdsMusic.mp3")
-sound.set_volume(0.3)  
-sound.play()
+#pygame.mixer.init()
+#sound = pygame.mixer.Sound("assets/ui/music/AngryBirdsMusic.mp3")
+#sound.set_volume(0.3)  
+#sound.play()
 
 while running:
     screen.fill('gray')

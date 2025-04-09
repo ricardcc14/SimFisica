@@ -18,13 +18,23 @@
             "angle": 30
         }, {
             "type": "box",
-            "material": "wood",
-            "x": 500,
+            "material": "stone",
+            "x": 400,
+            "y": 500,
+            "w": 100,
+            "h": 100,
+            "angle": 0
+        },
+        {
+            "type": "box",
+            "material": "glass",
+            "x": 400,
             "y": 300,
-            "w": 200,
+            "w": 100,
             "h": 100,
             "angle": 0
         }
+
     ],
     "punctuation": { "3stars": 100, "2stars": 50, "1star": 25 }
 },

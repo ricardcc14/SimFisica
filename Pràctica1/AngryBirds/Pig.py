@@ -42,9 +42,9 @@ class Pig:
     def update(self, world):
         if(self.collided):
             self.destroy(world)
-            sound = pygame.mixer.Sound("assets/ui/music/pig-pop.mp3")
-            sound.set_volume(0.3)  
-            sound.play()
+            #sound = pygame.mixer.Sound("assets/ui/music/pig-pop.mp3")
+            #sound.set_volume(0.3)  
+            #sound.play()
         pass
 
     def pigCollided(self):
