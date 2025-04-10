@@ -83,9 +83,10 @@ class Pig:
                     sound.play()
                     self.damageSoundPlayed = True
 
-                self.currentStatus = 1
-                self.timer+=(seconds-self.prevSec)
-                self.prevSec = seconds
+                if (self.currentStatus != 1):
+                    self.currentStatus = 1
+                    self.timer+=(seconds-self.prevSec)
+                    self.prevSec = seconds
 
 
 
