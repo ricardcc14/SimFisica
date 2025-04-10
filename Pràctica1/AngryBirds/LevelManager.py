@@ -58,9 +58,6 @@ class LevelManager:
         self.circles:list[Circle] = []
         self.pigs:list[Pig] = []
 
-        self.basicPig = []
-        self.basicPig.append(pygame.image.load("assets/pigs/basicMedium/1.png"))
-
         self.bkgSky = pygame.image.load("assets/sky.png")
         self.bkgFloor = pygame.image.load("assets/floor.png")
 
@@ -90,12 +87,16 @@ class LevelManager:
         #Load Pigs
         pigs_data = level_data.get("pigs", [])
         for (pig_type, pig_info) in pigs_data.items():
-            if pig_type == "king":
-                pig = Pig(self.world, pig_info["x"], pig_info["y"], pig_info["r"], self.basicPig)
+
+            pigSprites = []
+            pigSprites.append(pygame.image.load("assets/pigs/" + pig_type + "/1.png"))
+            pigSprites.append(pygame.image.load("assets/pigs/" + pig_type + "/2.png"))
+            pigSprites.append(pygame.image.load("assets/pigs/" + pig_type + "/3.png"))
+
+            if pig_type == "basic":
+                pig = Pig(self.world, pig_info["x"], pig_info["y"], pig_info["r"], pigSprites)
                 self.pigs.append(pig)
-            else:
-                pig = Pig(self.world, pig_info["x"], pig_info["y"], pig_info["r"], self.basicPig)
-                self.pigs.append(pig)
+        
         
         #Load Structures
         for structure in level_data["blocks"]:
@@ -144,7 +145,7 @@ class LevelManager:
             self.bird_area.append(pygame.Rect(x, y, self.bird_slot_size[0], self.bird_slot_size[1]))
  
         #Points system
-        self.pointsManager.restartLevel(level_id-1, len(self.pigs), 100, 10000, 20000)
+        self.pointsManager.restartLevel(level_id-1, len(self.pigs), 100, 300, 500)
 
         return True
                     

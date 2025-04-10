@@ -4,7 +4,6 @@
     "catapult_pos": { "x": 100, "y": 100 },
     "birds": ["red", "big", "red", "big"],
     "pigs": {
-        "king": { "x": 800, "y": 400, "r": 50 },
         "basic": { "x": 500, "y": 400, "r": 50 }
     },
     "blocks": [

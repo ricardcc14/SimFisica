@@ -2,6 +2,7 @@ import pygame
 import numpy as np
 import Box2D as b2
 import utils
+import time
 
 class Pig:
     def __init__(self, world:b2.b2World, x:float, y:float, radius:float, images:list[pygame.Surface]):
@@ -11,10 +12,12 @@ class Pig:
         self.timer = 0
         self.collisionTime = 3
         self.deathTime = 1
+        self.prevSec = 0
+
 
         self.collided = False
         self.isRemoved = False
-        self.currentStatus = 0 #0 is alive, 1 is collided 2 is toDestroy
+        self.currentStatus = 0 #0 is alive, 1 is dead 2 is toDestroy
 
         bodydf = b2.b2BodyDef()
         bodydf.position = utils.pixelToWorld(x, y)
@@ -41,15 +44,28 @@ class Pig:
 
     def update(self, world):
         if(self.collided):
-            self.destroy(world)
-            #sound = pygame.mixer.Sound("assets/ui/music/pig-pop.mp3")
-            #sound.set_volume(0.3)  
-            #sound.play()
+            seconds = time.time()
+            if(self.timer > self.collisionTime):
+                self.currentStatus = 2
+                self.setLinearVelocity(0, 0)
+                self.setAngularVelocity(0)
+                #if((seconds-self.prevSec) > self.deathTime): self.destroy(world)
+            else:
+
+                sound = pygame.mixer.Sound("assets/ui/music/pig-pop.mp3")
+                sound.set_volume(0.3)  
+                sound.play()
+
+                self.currentStatus = 1
+                self.timer+=(seconds-self.prevSec)
+                self.prevSec = seconds
+
         pass
 
     def pigCollided(self):
         if(not self.collided):
             self.collided = True
+            self.prevSec = time.time()
         pass
 
     def destroy(self, world:b2.b2World):
