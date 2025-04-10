@@ -86,8 +86,7 @@ class LevelManager:
         self.towerJoints.clear()
         self.complexJoints.clear()
             
-        #self.towerJoints.append(TowerJoint(self.world, 1000, 150, 100, 100, "wood"))   
-        self.complexJoints.append(ComplexJoint(self.world, 800, 150, 100, 100, "wood")) 
+        
         #Load Birds
         for bird in level_data["birds"]:
             bird_path = f"assets/birds/{bird}/bird_{bird}.png"
@@ -111,12 +110,13 @@ class LevelManager:
             material = structure["material"]
             type = structure["type"]
             
-            blockSprites = []
-            blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/1.png"))
-            blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/2.png"))
-            blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/3.png"))
-            blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/4.png"))
+            
             if type == "box":
+                blockSprites = []
+                blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/1.png"))
+                blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/2.png"))
+                blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/3.png"))
+                blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/4.png"))
                 if material == "wood":
                     box = WoodBox(self.world, structure["x"], structure["y"], structure["w"], structure["h"], blockSprites)
                 elif material == "stone":
@@ -146,6 +146,15 @@ class LevelManager:
                 
                 self.boxes.append(circle)
 
+       
+            if type == "tower":
+                joint = TowerJoint(self.world, structure["x"], structure["y"], structure["w"], structure["h"], material)
+                self.towerJoints.append(joint)
+            elif type == "complex":
+                joint = ComplexJoint(self.world, structure["x"], structure["y"], structure["w"], structure["h"], material)
+                self.complexJoints.append(joint)
+
+        #Load birds areas
         self.bird_area = []
         for i in range(len(self.birdsAvailable)):
             x = self.bird_slot_size[0] + i * self.bird_slot_spacing
@@ -153,7 +162,10 @@ class LevelManager:
             self.bird_area.append(pygame.Rect(x, y, self.bird_slot_size[0], self.bird_slot_size[1]))
  
         #Points system
-        self.pointsManager.restartLevel(level_id-1, len(self.pigs), 100, 300, 500)
+        points_thresh_3starts = level_data["points"]["3stars"]
+        points_thresh_2stars = level_data["points"]["2stars"]
+        points_thresh_1star = level_data["points"]["1star"]
+        self.pointsManager.restartLevel(level_id-1, len(self.pigs), points_thresh_1star, points_thresh_2stars, points_thresh_3starts)
 
         return True
                     

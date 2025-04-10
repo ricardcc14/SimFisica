@@ -8,6 +8,14 @@
     },
     "blocks": [
         {
+            "type": "complex",
+            "material": "wood",
+            "x": 800,
+            "y": 150,
+            "w": 100,
+            "h": 100
+        },
+        {
             "type": "box",
             "material": "wood",
             "x": 400,
@@ -35,15 +43,18 @@
         }
 
     ],
-    "punctuation": { "3stars": 100, "2stars": 50, "1star": 25 }
+    "points": { "3stars": 300, "2stars": 150, "1star": 25 }
 },
 {
     "id": 2,
     "catapult_pos": { "x": 100, "y": 100 },
     "birds": ["red", "big", "red", "big"],
     "pigs": {
-        "king": { "x": 800, "y": 400, "r": 100 },
-        "basic": { "x": 500, "y": 300, "r": 100 }
+        "basic": [
+            { "x": 800, "y": 400, "r": 100 },
+            { "x": 400, "y": 400, "r": 50 },
+            { "x": 600, "y": 400, "r": 50 }
+        ]
     },
     "blocks": [
         {
@@ -74,7 +85,7 @@
         }
 
     ],
-    "punctuation": { "3stars": 100, "2stars": 50, "1star": 25 }
+    "points": { "3stars": 100, "2stars": 50, "1star": 25 }
 }
 ]
     
