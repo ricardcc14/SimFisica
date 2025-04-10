@@ -323,5 +323,10 @@ class LevelManager:
             pig.destroy(self.world)
         for bird in self.birds:
             bird.destroy(self.world)
+        #for complex in self.complexJoints:
+            #complex.destroy(self.world)
+        #for complex2 in self.towerJoints:
+            #complex.destroy(self.world)
+
 
 

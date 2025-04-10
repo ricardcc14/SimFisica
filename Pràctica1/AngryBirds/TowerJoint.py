@@ -46,5 +46,3 @@ class TowerJoint():
     def update(self,world):
         for box in self.boxes:
             box.update(world)
-        
-
