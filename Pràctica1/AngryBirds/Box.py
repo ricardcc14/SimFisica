@@ -66,3 +66,6 @@ class Box:
             self.collided = True
             self.prevSec = time.time()
         pass
+
+    def getLinearVelocity(self):
+        return self.body.linearVelocity

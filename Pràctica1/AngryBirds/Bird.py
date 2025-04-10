@@ -70,3 +70,6 @@ class Bird:
         world.DestroyBody(self.body)
         self.isRemoved = True 
         pass
+
+    def getLinearVelocity(self):
+        return self.body.linearVelocity

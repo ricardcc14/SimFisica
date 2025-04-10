@@ -33,39 +33,19 @@ class ContactListener(b2.b2ContactListener):
             self.pointsManager.addPoints(10, False)
 
         if isinstance(o1, Bird) and isinstance(o2, Pig):
-            print("xoquen bird pig!")
-            sound = pygame.mixer.Sound("assets/ui/music/pig-damage.mp3")
-            sound.set_volume(0.3)  
-            sound.play()
             o1.birdCollided()
-            o2.pigCollided()
-            self.pointsManager.addPoints(100, True)
+            print(o1.getLinearVelocity().length)
+            isKilled = o2.pigCollidedWithBird(o1.getLinearVelocity().length)
+
+            if (isKilled == True):
+                self.pointsManager.addPoints(100, True)
+            if (isKilled == False):
+                self.pointsManager.addPoints(10, False)
 
         if isinstance(o1, Bird) and isinstance(o2, Surface):
             print("xoquen bird surface!")
             o1.birdCollided()
             self.pointsManager.addPoints(50, False)
-        '''
-        if(type(o2) == Bird): 
-            o1, o2 = o2, o1
-        
-        if(type(o1) == Bird and type(o2) == Box):
-            print("xoquen bird box!")
-            o1.birdCollided()
-            self.pointsManager.addPoints(10, False)
-
-        if(type(o1) == Bird and type(o2) == Pig):
-            print("xoquen bird pig!")
-            o1.birdCollided()
-            o2.pigCollided()
-            self.pointsManager.addPoints(100, True)
-
-        if(type(o1) == Bird and type(o2) == Surface):
-            print("xoquen bird surface!")
-            o1.birdCollided()
-            self.pointsManager.addPoints(50, False)
-        '''
-
 
         # Pig Collisions - Excluding Bird
         if isinstance(o2, Pig): 
@@ -73,8 +53,18 @@ class ContactListener(b2.b2ContactListener):
 
         if isinstance(o1, Pig) and isinstance(o2, Surface):
             print("xoquen pig surface!")
-            o1.pigCollided()
-            self.pointsManager.addPoints(250, True)
+            o1.pigCollidedWithSurf(o1.getLinearVelocity().length)
+            self.pointsManager.addPoints(250, False)
+        pass
+
+        if isinstance(o1, Pig) and isinstance(o2, Box):
+            print("xoquen pig box!")
+            isKilled = o1.pigCollidedWithWall(o1.getLinearVelocity().length, o2.getLinearVelocity().length)
+
+            if (isKilled == True):
+                self.pointsManager.addPoints(100, True)
+            if (isKilled == False):
+                self.pointsManager.addPoints(10, False)
         pass
 
     def EndContact(self, contact:b2.b2Contact):
