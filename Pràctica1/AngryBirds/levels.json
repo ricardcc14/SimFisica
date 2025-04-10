@@ -4,7 +4,7 @@
     "catapult_pos": { "x": 100, "y": 100 },
     "birds": ["red", "big", "red", "big"],
     "pigs": {
-        "basic": { "x": 500, "y": 400, "r": 50 }
+        "basic": { "x": 400, "y": 400, "r": 50 }
     },
     "blocks": [
         {
@@ -27,8 +27,8 @@
         {
             "type": "box",
             "material": "wood",
-            "x": 550,
-            "y": 101,
+            "x": 400,
+            "y": 301,
             "w": 100,
             "h": 100,
             "angle": 0

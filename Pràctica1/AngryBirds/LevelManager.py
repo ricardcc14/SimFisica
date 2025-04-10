@@ -9,6 +9,8 @@ from Box import Box
 from WoodBox import WoodBox
 from GlassBox import GlassBox
 from StoneBox import StoneBox
+from TowerJoint import TowerJoint
+from ComplexJoint import ComplexJoint
 from Circle import Circle
 from Pig import Pig
 from Surface import Surface
@@ -55,6 +57,8 @@ class LevelManager:
         self.currentBirdSprite = []
         self.selectedBirdIndex = None
         self.boxes:list[Box] = []
+        self.towerJoints:list[TowerJoint] = []
+        self.complexJoints:list[ComplexJoint] = []
         self.circles:list[Circle] = []
         self.pigs:list[Pig] = []
 
@@ -79,7 +83,11 @@ class LevelManager:
         self.boxes.clear()
         self.circles.clear()
         self.birds.clear()
+        self.towerJoints.clear()
+        self.complexJoints.clear()
             
+        #self.towerJoints.append(TowerJoint(self.world, 1000, 150, 100, 100, "wood"))   
+        self.complexJoints.append(ComplexJoint(self.world, 800, 150, 100, 100, "wood")) 
         #Load Birds
         for bird in level_data["birds"]:
             bird_path = f"assets/birds/{bird}/bird_{bird}.png"
@@ -203,7 +211,12 @@ class LevelManager:
             else:
                 box.update(self.world)
                 box.draw(self.screen)
-        
+        for i, joint in enumerate(self.towerJoints):
+            joint.draw(self.screen)
+            joint.update(self.world)
+        for i, joint in enumerate(self.complexJoints):
+            joint.draw(self.screen)
+            joint.update(self.world)
         for i, pig in enumerate(self.pigs):
             if(pig.isRemoved):
                 self.pigs.pop(i)
@@ -280,7 +293,7 @@ class LevelManager:
 
             sound = pygame.mixer.Sound("assets/ui/music/flying-sound.mp3")
             sound.set_volume(0.3)  
-            sound.play()
+            #sound.play()
             
 
     def nearCatapult(self, pos):
