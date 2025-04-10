@@ -100,8 +100,10 @@ class LevelManager:
             pigSprites.append(pygame.image.load("assets/pigs/" + pig_type + "/2.png"))
             pigSprites.append(pygame.image.load("assets/pigs/" + pig_type + "/3.png"))
 
-            if pig_type == "basic":
-                pig = Pig(self.world, pig_info["x"], pig_info["y"], pig_info["r"], pigSprites)
+            pig_type = pigs_data["basic"]
+
+            for single_pig in pig_type:
+                pig = Pig(self.world, single_pig["x"], single_pig["y"], single_pig["r"], pigSprites)
                 self.pigs.append(pig)
         
         
