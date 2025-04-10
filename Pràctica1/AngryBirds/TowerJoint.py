@@ -11,6 +11,12 @@ class TowerJoint():
         self.material = material
         self.images = []
         self.boxes = []
+        self.currentStatus = 0
+        self.images.append(pygame.image.load("assets/blocks/" + material + "/box/1.png"))
+        self.images.append(pygame.image.load("assets/blocks/" + material + "/box/2.png"))
+        self.images.append(pygame.image.load("assets/blocks/" + material + "/box/3.png"))
+        self.images.append(pygame.image.load("assets/blocks/" + material + "/box/4.png"))
+        
         for i in range(3):
             ypos = y + i * h
             if material == "wood":
@@ -32,4 +38,7 @@ class TowerJoint():
             )
             self.joints.append(joint)
 
+    def draw(self, screen:pygame.Surface):
+        for box in self.boxes:
+            box.draw(screen)
 

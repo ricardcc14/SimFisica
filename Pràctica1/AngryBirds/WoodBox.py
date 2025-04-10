@@ -11,7 +11,6 @@ class WoodBox(Box):
         self.body.DestroyFixture(self.body.fixtures[0])
 
         # Crear un nou fixture amb la densitat modificada
-        boxShape = b2.b2PolygonShape()
 
         boxShape = b2.b2PolygonShape(box=utils.pixelToWorld(w/2, h/2))
 
