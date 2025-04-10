@@ -15,14 +15,15 @@ class Pig:
         self.prevSec = 0
         self.impactVelocity = 0
         
-        self.VELOCITY_BIRD_KILL = 5
+        self.VELOCITY_BIRD_KILL = 3
         self.VELOCITY_SURF_KILL = 0
-        self.VELOCITY_WALL_KILL = 5
+        self.VELOCITY_WALL_KILL = 3
 
         self.collidedWBird = False
         self.collidedWWall = False
         self.collidedWSurf = False
         self.damageSoundPlayed = False
+        self.poofSoundPlayed = False
 
         self.isRemoved = False
         self.currentStatus = 0 #0 is alive, 1 is dead 2 is toDestroy
@@ -55,6 +56,13 @@ class Pig:
 
         if(self.collidedWBird):
             self.currentStatus = 2
+
+            if (self.damageSoundPlayed == False):   
+                sound = pygame.mixer.Sound("assets/ui/music/pig-pop.mp3")
+                sound.set_volume(0.3)  
+                sound.play()
+                self.damageSoundPlayed = True
+
             self.setLinearVelocity(0, 0)
             self.setAngularVelocity(0)
             if((seconds-self.prevSec) > self.deathTime): self.destroy(world)
@@ -133,9 +141,4 @@ class Pig:
     def destroy(self, world:b2.b2World):
         world.DestroyBody(self.body)
         self.isRemoved = True 
-
-        sound = pygame.mixer.Sound("assets/ui/music/pig-pop.mp3")
-        sound.set_volume(0.3)  
-        sound.play()
-
         pass

@@ -53,8 +53,11 @@ class ContactListener(b2.b2ContactListener):
 
         if isinstance(o1, Pig) and isinstance(o2, Surface):
             print("xoquen pig surface!")
-            o1.pigCollidedWithSurf(o1.getLinearVelocity().length)
-            self.pointsManager.addPoints(250, False)
+            isKilled = o1.pigCollidedWithSurf(o1.getLinearVelocity().length)
+            if (isKilled == True):
+                self.pointsManager.addPoints(100, True)
+            if (isKilled == False):
+                self.pointsManager.addPoints(10, False)
         pass
 
         if isinstance(o1, Pig) and isinstance(o2, Box):

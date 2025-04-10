@@ -14,6 +14,8 @@ from Bird import Bird
 from Box import Box
 from Pig import Pig
 from Button import Button
+import time
+
 
 
 # pygame setup
@@ -36,6 +38,9 @@ pygame.mixer.init()
 sound = pygame.mixer.Sound("assets/ui/music/AngryBirdsMusic.mp3")
 sound.set_volume(0.3)  
 sound.play()
+
+levelPassed_seconds = 0
+levelEnded = False
 
 while running:
     screen.fill('gray')
@@ -73,7 +78,6 @@ while running:
                 levelManager.loadLevel(currentlevel)
 
             elif view.back_menu_button.isClicked(pygame.mouse.get_pos()):
-
                 scene = "start"
             
         # Level screen events
@@ -98,6 +102,8 @@ while running:
             scene = "lvl"+str(currentlevel)
             levelManager.loadLevel(currentlevel)
 
+
+
     if scene == "start":
         view.drawStart()
     elif scene == "menu":
@@ -105,9 +111,19 @@ while running:
     elif scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3":
         levelManager.runLevel()
         if(pointsManager.checkIfLevelIsPassed(currentlevel_index)):
-            scene = "lvl_end"
-            levelManager.destroyAllObjects()
-            view.drawEndLevel(currentlevel, pointsManager.getStars(currentlevel_index), pointsManager.getPoints(currentlevel_index))
+            if(levelEnded == False):
+                levelPassed_seconds = time.time()
+                levelEnded = True
+                view.drawLevel(levelManager, pointsManager.getPoints(currentlevel_index))
+            else:
+                if (levelEnded == True and time.time() - levelPassed_seconds >= 3):
+                    scene = "lvl_end"
+                    levelManager.destroyAllObjects()
+                    view.drawEndLevel(currentlevel, pointsManager.getStars(currentlevel_index), pointsManager.getPoints(currentlevel_index))
+                    levelEnded = False
+                else:
+                    view.drawLevel(levelManager, pointsManager.getPoints(currentlevel_index))
+           
         else:
             view.drawLevel(levelManager, pointsManager.getPoints(currentlevel_index))
     elif scene == "lvl_end":
