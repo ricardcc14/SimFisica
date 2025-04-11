@@ -43,27 +43,23 @@ class ContactListener(b2.b2ContactListener):
                 self.pointsManager.addPoints(10, False)
 
         if isinstance(o1, Bird) and isinstance(o2, Surface):
-            print("xoquen bird surface!")
             o1.birdCollided()
-            self.pointsManager.addPoints(50, False)
+            self.pointsManager.addPoints(5, False)
 
         # Pig Collisions - Excluding Bird
         if isinstance(o2, Pig): 
             o1, o2 = o2, o1
 
         if isinstance(o1, Pig) and isinstance(o2, Surface):
-            print("xoquen pig surface!")
             isKilled = o1.pigCollidedWithSurf(o1.getLinearVelocity().length)
             if (isKilled == True):
-                self.pointsManager.addPoints(100, True)
+                self.pointsManager.addPoints(110, True)
             if (isKilled == False):
                 self.pointsManager.addPoints(10, False)
         pass
 
         if isinstance(o1, Pig) and isinstance(o2, Box):
-            print("xoquen pig box!")
             isKilled = o1.pigCollidedWithWall(o1.getLinearVelocity().length, o2.getLinearVelocity().length)
-
             if (isKilled == True):
                 self.pointsManager.addPoints(100, True)
             if (isKilled == False):
