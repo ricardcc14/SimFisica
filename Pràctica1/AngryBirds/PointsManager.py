@@ -83,9 +83,11 @@ class PointsManager:
     def setPassed(self, currentLevel):
         self.levels_points[currentLevel]["level_passed"] = True
 
-
     #Funció per comprovar si el nivell actual s'ha completat
-    def checkIfLevelIsPassed(self, currentLevel):
+    def checkIfLevelIsPassed(self, currentLevel, birdsAvailable):
+        if (birdsAvailable == False):
+            self.levels_points[currentLevel]["level_passed"] = True
+
         return self.levels_points[currentLevel]["level_passed"]
 
 

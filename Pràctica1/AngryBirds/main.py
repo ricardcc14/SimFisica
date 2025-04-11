@@ -108,11 +108,12 @@ while running:
         view.drawMenu()
     elif scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3":
         levelManager.runLevel()
-        if(pointsManager.checkIfLevelIsPassed(currentlevel_index)):
+        if(pointsManager.checkIfLevelIsPassed(currentlevel_index, levelManager.birdsAreAvailable())):
             if(levelEnded == False):
                 levelPassed_seconds = time.time()
                 levelEnded = True
                 view.drawLevel(levelManager, pointsManager.getPoints(currentlevel_index))
+
             else:
                 if (levelEnded == True and time.time() - levelPassed_seconds >= 3):
                     scene = "lvl_end"

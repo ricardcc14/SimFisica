@@ -63,16 +63,12 @@ class Pig:
                 sound.play()
                 self.damageSoundPlayed = True
 
-            self.setLinearVelocity(0, 0)
-            self.setAngularVelocity(0)
             if((seconds-self.prevSec) > self.deathTime): self.destroy(world)
         pass
 
         if(self.collidedWSurf or self.collidedWWall):
             if(self.timer > self.collisionTime):
                 self.currentStatus = 2
-                self.setLinearVelocity(0, 0)
-                self.setAngularVelocity(0)
                 if((seconds-self.prevSec) > self.deathTime): self.destroy(world)
                 
             else:
@@ -87,8 +83,6 @@ class Pig:
                     self.currentStatus = 1
                     self.timer+=(seconds-self.prevSec)
                     self.prevSec = seconds
-
-
 
     def pigCollidedWithBird(self, impactVel):
         if(not self.collidedWBird):

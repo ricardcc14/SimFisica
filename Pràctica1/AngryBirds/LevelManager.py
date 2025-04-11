@@ -321,4 +321,6 @@ class LevelManager:
             complex2.destroy(self.world)
 
 
-
+    def birdsAreAvailable(self):
+        print(len(self.birdsAvailable))
+        return (len(self.birdsAvailable) != 0)
