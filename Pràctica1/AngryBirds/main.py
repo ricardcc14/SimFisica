@@ -102,8 +102,6 @@ while running:
             scene = "lvl"+str(currentlevel)
             levelManager.loadLevel(currentlevel)
 
-
-
     if scene == "start":
         view.drawStart()
     elif scene == "menu":
