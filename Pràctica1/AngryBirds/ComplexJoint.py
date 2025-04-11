@@ -85,9 +85,12 @@ class ComplexJoint():
 
     def destroy(self, world:b2.b2World):
         for joint in self.joints:
-            world.DestroyJoint(joint)
+            if joint:
+                world.DestroyJoint(joint)
+
         for box in self.boxes:
-            box.destroy(world)
-        self.boxes.clear()
-        self.joints.clear()
-        self.isRemoved = True
+            if box:
+                box.destroy(world)
+                self.boxes.clear()
+                self.joints.clear()
+                self.isRemoved = True

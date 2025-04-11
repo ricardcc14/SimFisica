@@ -17,7 +17,6 @@ from Button import Button
 import time
 
 
-
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((1200, 600))
@@ -97,12 +96,11 @@ while running:
         elif view.end_repeat_button.isClicked(pygame.mouse.get_pos()) and scene == "lvl_end" and event.type == pygame.MOUSEBUTTONDOWN:
             scene = "lvl_"+str(currentlevel)
             levelManager.loadLevel(currentlevel)
+            print(str(currentlevel))
         elif view.end_next_button.isClicked(pygame.mouse.get_pos()) and scene == "lvl_end" and event.type == pygame.MOUSEBUTTONDOWN:
             currentlevel = currentlevel + 1
             scene = "lvl"+str(currentlevel)
             levelManager.loadLevel(currentlevel)
-
-
 
     if scene == "start":
         view.drawStart()
@@ -110,7 +108,7 @@ while running:
         view.drawMenu()
     elif scene == "lvl_1" or scene == "lvl_2" or scene == "lvl_3":
         levelManager.runLevel()
-        if(pointsManager.checkIfLevelIsPassed(currentlevel_index)):
+        if(pointsManager.checkIfLevelIsPassed(currentlevel_index, levelManager.birdsAreAvailable(), levelManager.pigsAreAvailable())):
             if(levelEnded == False):
                 levelPassed_seconds = time.time()
                 levelEnded = True

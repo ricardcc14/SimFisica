@@ -51,9 +51,6 @@ class PointsManager:
         if (pigIsKilled == True):
             self.levels_points[self.currentLevel]["pigs_killed"] += 1
      
-            if (self.levels_points[self.currentLevel]["pigs_killed"] == self.levels_points[self.currentLevel]["pigs_tokill"]):
-                self.levels_points[self.currentLevel]["level_passed"] = True
-
     
     #Funció per saber quantes estrelles té el nivell seleccionat
     def getUpdatedStars(self, currentLevel):
@@ -83,9 +80,11 @@ class PointsManager:
     def setPassed(self, currentLevel):
         self.levels_points[currentLevel]["level_passed"] = True
 
-
     #Funció per comprovar si el nivell actual s'ha completat
-    def checkIfLevelIsPassed(self, currentLevel):
+    def checkIfLevelIsPassed(self, currentLevel, birdsAvailable, pigsAvailable):
+        if (birdsAvailable == False or pigsAvailable == False):
+            self.levels_points[currentLevel]["level_passed"] = True
+
         return self.levels_points[currentLevel]["level_passed"]
 
 

@@ -24,6 +24,7 @@ class Pig:
         self.collidedWSurf = False
         self.damageSoundPlayed = False
         self.poofSoundPlayed = False
+        self.alreadyCollided = False
 
         self.isRemoved = False
         self.currentStatus = 0 #0 is alive, 1 is dead 2 is toDestroy
@@ -63,30 +64,20 @@ class Pig:
                 sound.play()
                 self.damageSoundPlayed = True
 
-            self.setLinearVelocity(0, 0)
-            self.setAngularVelocity(0)
             if((seconds-self.prevSec) > self.deathTime): self.destroy(world)
         pass
 
         if(self.collidedWSurf or self.collidedWWall):
-            if(self.timer > self.collisionTime):
+            if(self.timer > self.collisionTime and self.alreadyCollided):
                 self.currentStatus = 2
                 self.setLinearVelocity(0, 0)
                 self.setAngularVelocity(0)
                 if((seconds-self.prevSec) > self.deathTime): self.destroy(world)
-                
             else:
-
-                if (self.damageSoundPlayed == False):   
-                    sound = pygame.mixer.Sound("assets/ui/music/pig-damage.mp3")
-                    sound.set_volume(0.3)  
-                    sound.play()
-                    self.damageSoundPlayed = True
-
-                if (self.currentStatus != 1):
-                    self.currentStatus = 1
-                    self.timer+=(seconds-self.prevSec)
-                    self.prevSec = seconds
+                self.currentStatus = 1
+                self.timer+=(seconds-self.prevSec)
+                self.prevSec = seconds
+                self.alreadyCollided = True
 
 
 
