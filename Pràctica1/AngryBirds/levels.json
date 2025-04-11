@@ -2,35 +2,58 @@
 {
     "id": 1,
     "catapult_pos": { "x": 100, "y": 100 },
-    "birds": ["red", "big", "red", "big"],
+    "birds": ["red", "red", "red"],
     "pigs": {
-        "basic": [{ "x": 900, "y": 300, "r": 30 }, {"x": 900, "y": 500, "r": 30 }, {"x": 500, "y": 501, "r": 30 }]
+        "basic": [{ "x": 1005, "y": 400, "r": 30 }, {"x": 750, "y": 250, "r": 30 }, {"x": 500, "y": 200, "r": 30 }]
     },
     "blocks": [
         {
-            "type": "complex",
+            "type": "box",
             "material": "wood",
-            "x": 800,
-            "y": 101,
-            "w": 100,
-            "h": 100
-        },
-        {
-            "type": "complex",
-            "material": "wood",
-            "x": 800,
-            "y": 301,
+            "x": 1000,
+            "y": 100,
             "w": 100,
             "h": 100
         },
         {
             "type": "box",
-            "material": "indestructible",
-            "x": 500,
-            "y": 151,
+            "material": "wood",
+            "x": 1000,
+            "y": 200,
             "w": 100,
-            "h": 100,
-            "angle": 30
+            "h": 100
+        },
+        {
+            "type": "box",
+            "material": "wood",
+            "x": 1000,
+            "y": 300,
+            "w": 100,
+            "h": 100
+        },
+        {
+            "type": "box",
+            "material": "stone",
+            "x": 750,
+            "y": 100,
+            "w": 100,
+            "h": 100
+        },
+        {
+            "type": "box",
+            "material": "stone",
+            "x": 750,
+            "y": 200,
+            "w": 100,
+            "h": 100
+        },
+        {
+            "type": "box",
+            "material": "glass",
+            "x": 500,
+            "y": 101,
+            "w": 100,
+            "h": 100
         }
 
     ],
@@ -39,45 +62,120 @@
 {
     "id": 2,
     "catapult_pos": { "x": 100, "y": 100 },
-    "birds": ["red", "big", "red", "big"],
+    "birds": ["big", "big", "red", "red"],
     "pigs": {
         "basic": [
-            { "x": 800, "y": 400, "r": 100 },
-            { "x": 400, "y": 400, "r": 50 },
-            { "x": 600, "y": 400, "r": 50 }
+            { "x": 700, "y": 200, "r": 30},
+            { "x": 1000, "y": 300, "r": 30 },
+            { "x": 500, "y": 300, "r": 30 }
         ]
     },
     "blocks": [
         {
             "type": "box",
             "material": "glass",
-            "x": 400,
-            "y": 400,
+            "x": 1000,
+            "y": 100,
             "w": 100,
-            "h": 100,
-            "angle": 30
+            "h": 100
         }, {
             "type": "box",
             "material": "glass",
-            "x": 400,
-            "y": 500,
+            "x": 1000,
+            "y": 200,
             "w": 100,
-            "h": 100,
-            "angle": 0
+            "h": 100
         },
         {
             "type": "box",
-            "material": "glass",
-            "x": 400,
-            "y": 300,
+            "material": "stone",
+            "x": 800,
+            "y": 101,
             "w": 100,
-            "h": 100,
-            "angle": 0
+            "h": 100
+        },
+        {
+            "type": "box",
+            "material": "stone",
+            "x": 700,
+            "y": 101,
+            "w": 100,
+            "h": 100
+        },
+        {
+            "type": "box",
+            "material": "stone",
+            "x": 600,
+            "y": 101,
+            "w": 100,
+            "h": 100
+        },
+        {
+            "type": "box",
+            "material": "stone",
+            "x": 600,
+            "y": 201,
+            "w": 100,
+            "h": 100
+        },
+        {
+            "type": "box",
+            "material": "stone",
+            "x": 600,
+            "y": 301,
+            "w": 100,
+            "h": 100
+        },
+        {
+            "type": "box",
+            "material": "stone",
+            "x": 500,
+            "y": 101,
+            "w": 100,
+            "h": 100
+        },
+        {
+            "type": "box",
+            "material": "stone",
+            "x": 500,
+            "y": 201,
+            "w": 100,
+            "h": 100
+        },
+        {
+            "type": "box",
+            "material": "stone",
+            "x": 400,
+            "y": 101,
+            "w": 100,
+            "h": 100
         }
 
     ],
     "points": { "3stars": 100, "2stars": 50, "1star": 25 }
-}
+},
+{
+    "id": 3,
+    "catapult_pos": { "x": 100, "y": 100 },
+    "birds": ["red", "big", "red", "big"],
+    "pigs": {
+      "basic": [
+        { "x": 500, "y": 201, "r": 30 },
+        { "x": 700, "y": 201, "r": 30 },
+        { "x": 900, "y": 301, "r": 30 },
+        { "x": 1100, "y": 201, "r": 30 }
+      ]
+    },
+    "blocks": [
+      { "type": "box", "material": "indestructible", "x": 500, "y": 150, "w": 100, "h": 100 },
+      { "type": "tower", "material": "stone",  "x": 600, "y": 250, "w": 100, "h": 100 },
+      { "type": "box", "material": "indestructible", "x": 700, "y": 150, "w": 100, "h": 100 },
+      { "type": "complex", "material": "wood",  "x": 800, "y": 150, "w": 100, "h": 100 },
+      { "type": "complex", "material": "glass",  "x": 800, "y": 400, "w": 100, "h": 100 },
+      { "type": "box", "material": "wood", "x": 1100, "y": 150, "w": 100, "h": 100 }
+    ],
+    "points": { "3stars": 250, "2stars": 125, "1star": 50 }
+  }
 ]
     
 
