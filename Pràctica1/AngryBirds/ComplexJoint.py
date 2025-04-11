@@ -21,9 +21,7 @@ class ComplexJoint():
         
         pattern = [
             [1, 1, 1],
-            [1, 0, 1],
-            [1, 1, 1],
-            [1, 0, 1],
+            [1, 0, 1]
         ]
         for row_index, row in enumerate(pattern):
             box_row = []
@@ -84,3 +82,12 @@ class ComplexJoint():
     def update(self,world):
         for box in self.boxes:
             box.update(world)
+
+    def destroy(self, world:b2.b2World):
+        for joint in self.joints:
+            world.DestroyJoint(joint)
+        for box in self.boxes:
+            box.destroy(world)
+        self.boxes.clear()
+        self.joints.clear()
+        self.isRemoved = True

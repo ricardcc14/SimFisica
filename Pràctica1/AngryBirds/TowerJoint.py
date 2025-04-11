@@ -46,3 +46,11 @@ class TowerJoint():
     def update(self,world):
         for box in self.boxes:
             box.update(world)
+
+    def destroy(self, world:b2.b2World):
+        for box in self.boxes:
+            world.DestroyBody(box.body)
+        for joint in self.joints:
+            world.DestroyJoint(joint)
+        self.boxes = []
+        self.isRemoved = True

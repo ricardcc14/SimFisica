@@ -4,42 +4,33 @@
     "catapult_pos": { "x": 100, "y": 100 },
     "birds": ["red", "big", "red", "big"],
     "pigs": {
-        "basic": [{ "x": 400, "y": 400, "r": 50 }]
+        "basic": [{ "x": 900, "y": 300, "r": 30 }, {"x": 900, "y": 500, "r": 30 }, {"x": 500, "y": 501, "r": 30 }]
     },
     "blocks": [
         {
             "type": "complex",
             "material": "wood",
             "x": 800,
-            "y": 150,
+            "y": 101,
+            "w": 100,
+            "h": 100
+        },
+        {
+            "type": "complex",
+            "material": "wood",
+            "x": 800,
+            "y": 301,
             "w": 100,
             "h": 100
         },
         {
             "type": "box",
-            "material": "wood",
-            "x": 400,
-            "y": 101,
+            "material": "indestructible",
+            "x": 500,
+            "y": 151,
             "w": 100,
             "h": 100,
             "angle": 30
-        }, {
-            "type": "box",
-            "material": "wood",
-            "x": 400,
-            "y": 201,
-            "w": 100,
-            "h": 100,
-            "angle": 0
-        },
-        {
-            "type": "box",
-            "material": "wood",
-            "x": 400,
-            "y": 301,
-            "w": 100,
-            "h": 100,
-            "angle": 0
         }
 
     ],

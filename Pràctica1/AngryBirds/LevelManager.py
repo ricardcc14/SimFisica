@@ -9,6 +9,7 @@ from Box import Box
 from WoodBox import WoodBox
 from GlassBox import GlassBox
 from StoneBox import StoneBox
+from IndestructibleBox import IndestructibleBox
 from TowerJoint import TowerJoint
 from ComplexJoint import ComplexJoint
 from Circle import Circle
@@ -114,42 +115,31 @@ class LevelManager:
             
             
             if type == "box":
-                blockSprites = []
-                blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/1.png"))
-                blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/2.png"))
-                blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/3.png"))
-                blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/4.png"))
-                if material == "wood":
-                    box = WoodBox(self.world, structure["x"], structure["y"], structure["w"], structure["h"], blockSprites)
-                elif material == "stone":
-                    box = StoneBox(self.world, structure["x"], structure["y"], structure["w"], structure["h"], blockSprites)
-                elif material == "glass":
-                    box = GlassBox(self.world, structure["x"], structure["y"], structure["w"], structure["h"], blockSprites)
+                if material == "indestructible":
+                    box = IndestructibleBox(self.world, structure["x"], structure["y"], structure["w"], structure["h"])
                 else:
-                    box = Box(self.world, structure["x"], structure["y"], structure["w"], structure["h"], blockSprites)
+                    blockSprites = []
+                    blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/1.png"))
+                    blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/2.png"))
+                    blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/3.png"))
+                    blockSprites.append(pygame.image.load("assets/blocks/" + material + "/" + type + "/4.png"))
+                    if material == "wood":
+                        box = WoodBox(self.world, structure["x"], structure["y"], structure["w"], structure["h"], blockSprites)
+                    elif material == "stone":
+                        box = StoneBox(self.world, structure["x"], structure["y"], structure["w"], structure["h"], blockSprites)
+                    elif material == "glass":
+                        box = GlassBox(self.world, structure["x"], structure["y"], structure["w"], structure["h"], blockSprites)
+                        
+                    else:
+                        box = Box(self.world, structure["x"], structure["y"], structure["w"], structure["h"], blockSprites)
                 
                 # Configurar angle si existeix
                 if "angle" in structure:
                     box.body.angle = numpy.radians(structure["angle"])
                 
                 self.boxes.append(box)
-                
-            elif type == "circle":
-                radius = structure["r"]
-    
-                if material == "wood":
-                    circle = Circle(self.world, structure["x"], structure["y"], radius, blockSprites)
-                elif material == "stone":
-                    circle = Circle(self.world, structure["x"], structure["y"], radius, blockSprites)
-                elif material == "glass":
-                    circle = Circle(self.world, structure["x"], structure["y"], radius, blockSprites)
-                else:
-                    circle = Circle(self.world, structure["x"], structure["y"], radius, blockSprites)
-                
-                self.boxes.append(circle)
 
-       
-            if type == "tower":
+            elif type == "tower":
                 joint = TowerJoint(self.world, structure["x"], structure["y"], structure["w"], structure["h"], material)
                 self.towerJoints.append(joint)
             elif type == "complex":
@@ -325,10 +315,10 @@ class LevelManager:
             pig.destroy(self.world)
         for bird in self.birds:
             bird.destroy(self.world)
-        #for complex in self.complexJoints:
-            #complex.destroy(self.world)
-        #for complex2 in self.towerJoints:
-            #complex.destroy(self.world)
+        for complex in self.complexJoints:
+            complex.destroy(self.world)
+        for complex2 in self.towerJoints:
+            complex2.destroy(self.world)
 
 
 
