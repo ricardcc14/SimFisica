@@ -258,10 +258,8 @@ class LevelManager:
     #Funció que gestiona quan l'usuari fa click al mouse prepara el llançament de l'ocell
 
     def handleMouseDown(self, mouse_pos):
-        print("MouseDown")
         if (self.levelState == self.STATE_NO_BIRD_SELECTED and self.birds == []) or (self.levelState == self.STATE_NO_BIRD_SELECTED and self.birds[-1].body.position.x >= 12) or (self.levelState == self.STATE_NO_BIRD_SELECTED and self.birds[-1].body.position.x < 0):
             
-            print(self.birdsAvailable)
             for i, area in enumerate(self.bird_area):
                 if area.collidepoint(mouse_pos):
                     self.currentBirdSprite.clear()
@@ -273,8 +271,6 @@ class LevelManager:
                     return
                 
         elif self.levelState == self.STATE_BIRD_SELECTED:
-            print("Bird selected: Near catapulta", self.nearCatapult(mouse_pos))
-
             if self.nearCatapult(mouse_pos):
                 self.levelState = self.STATE_CHARGING
                 self.origin = b2.b2Vec2(mouse_pos)
@@ -294,7 +290,6 @@ class LevelManager:
     #Funció que llança l'ocell un cop l'usuari deixa de fer click
      
     def handleMouseUp(self, mouse_pos):
-        print("MouseUp")
         if self.levelState == self.STATE_CHARGING:
             self.end = b2.b2Vec2(mouse_pos)
             self.throwBird(self.origin, self.end)

@@ -2,6 +2,7 @@ Pràctica Angry Birds
 Simulació Física - Àlex Alonso Anglada i Ricard Colet Cirbian
 
 Metodologia per l'execució
+
 Per iniciar el joc s'ha d'executar el fitxer **main.py** dins de la carpeta del projecte. 
 (El path de la terminal hauria d'incloure la carpeta del projecte i executar-se a dins)
 

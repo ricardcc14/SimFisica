@@ -48,9 +48,9 @@ class TowerJoint():
             box.update(world)
 
     def destroy(self, world:b2.b2World):
-        for box in self.boxes:
-            world.DestroyBody(box.body)
         for joint in self.joints:
             world.DestroyJoint(joint)
+        for box in self.boxes:
+            world.DestroyBody(box.body)
         self.boxes = []
         self.isRemoved = True
