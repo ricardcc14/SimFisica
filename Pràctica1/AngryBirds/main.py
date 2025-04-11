@@ -94,13 +94,14 @@ while running:
         elif view.end_menu_button.isClicked(pygame.mouse.get_pos()) and scene == "lvl_end" and event.type == pygame.MOUSEBUTTONDOWN:
             scene = "menu"
         elif view.end_repeat_button.isClicked(pygame.mouse.get_pos()) and scene == "lvl_end" and event.type == pygame.MOUSEBUTTONDOWN:
-            scene = "lvl_"+str(currentlevel)
+            scene = "lvl_" + str(currentlevel)
             levelManager.loadLevel(currentlevel)
-            print(str(currentlevel))
+
         elif view.end_next_button.isClicked(pygame.mouse.get_pos()) and scene == "lvl_end" and event.type == pygame.MOUSEBUTTONDOWN:
             currentlevel = currentlevel + 1
-            scene = "lvl"+str(currentlevel)
+            scene = "lvl_" + str(currentlevel)
             levelManager.loadLevel(currentlevel)
+            print(scene)
 
     if scene == "start":
         view.drawStart()
@@ -121,7 +122,6 @@ while running:
                     levelEnded = False
                 else:
                     view.drawLevel(levelManager, pointsManager.getPoints(currentlevel_index))
-           
         else:
             view.drawLevel(levelManager, pointsManager.getPoints(currentlevel_index))
     elif scene == "lvl_end":

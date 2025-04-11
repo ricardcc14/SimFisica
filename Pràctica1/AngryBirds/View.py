@@ -2,6 +2,9 @@ import pygame as py
 import utils
 from Button import Button
 
+
+#Classe que s'encarrega de dibuixar els elements d'UI de la pantalla
+
 class View:
     def __init__ (self, screen, levelManager):
         self.screen = screen

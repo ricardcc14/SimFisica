@@ -44,7 +44,6 @@ class PointsManager:
 
     #Funció per afegir nous punts al nivell, indicant si els punts són donats per algun enemic eliminat
     def addPoints(self, newPoints, pigIsKilled):
-
         self.levels_points[self.currentLevel]["points"] += newPoints
         self.levels_points[self.currentLevel]["stars"] = self.getUpdatedStars(self.currentLevel)
 
@@ -77,6 +76,7 @@ class PointsManager:
     def getStars(self, currentLevel):
         return self.levels_points[currentLevel]["stars"]
     
+    #Setter de l'estat del nivell
     def setPassed(self, currentLevel):
         self.levels_points[currentLevel]["level_passed"] = True
 

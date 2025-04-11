@@ -68,6 +68,9 @@ class LevelManager:
 
         self.surface = Surface(self.world, self.screen.get_width()/2, 100, self.screen.get_width()*2, 5)
 
+
+    #Funció que inicialitza un nivell extraient la informació del JSON
+
     def loadLevel(self, level_id):
 
         #Llegir informació del JSON
@@ -166,8 +169,6 @@ class LevelManager:
         # RENDER YOUR GAME HERE
         self.world.Step(self.time_step, self.vel_iters, self.pos_iters)
         
-
-        
     
     def draw(self):
         
@@ -187,7 +188,6 @@ class LevelManager:
                 bird_sprite = pygame.transform.scale(bird_sprite, self.bird_slot_size)
             self.screen.blit(bird_sprite, self.bird_area[i])
             
-        
         if self.levelState == self.STATE_BIRD_SELECTED:
             self.screen.blit(self.currentBirdSprite[0], (self.catapult_origin.x-25, self.screen.get_height()-self.catapult_origin.y-25))
         elif self.levelState == self.STATE_CHARGING:
@@ -232,6 +232,9 @@ class LevelManager:
         self.surface.draw(self.screen)
         pass
 
+
+    #Funció que gestiona el llançament de l'ocell
+
     def throwBird(self, origin, end):
         direction = origin - end
 
@@ -251,6 +254,8 @@ class LevelManager:
         self.levelState = self.STATE_BIRD_FLYING
         self.levelState = self.STATE_NO_BIRD_SELECTED
         pass
+
+    #Funció que gestiona quan l'usuari fa click al mouse prepara el llançament de l'ocell
 
     def handleMouseDown(self, mouse_pos):
         print("MouseDown")
@@ -285,10 +290,9 @@ class LevelManager:
                         self.selectedBirdIndex = i
                         self.levelState = self.STATE_BIRD_SELECTED
                         return
-        #elif self.levelState == self.STATE_BIRD_FLYING:
-         #   if self.birds:
-          #      self.birds[-1].activateHability()
 
+    #Funció que llança l'ocell un cop l'usuari deixa de fer click
+     
     def handleMouseUp(self, mouse_pos):
         print("MouseUp")
         if self.levelState == self.STATE_CHARGING:
@@ -297,9 +301,11 @@ class LevelManager:
 
             sound = pygame.mixer.Sound("assets/ui/music/flying-sound.mp3")
             sound.set_volume(0.3)  
-            #sound.play()
+            sound.play()
             
 
+    # Funció que detecta quan el mouse està aprop de la catapulta
+        
     def nearCatapult(self, pos):
        
         origin_screen = (self.catapult_origin.x, self.screen.get_height() - self.catapult_origin.y)

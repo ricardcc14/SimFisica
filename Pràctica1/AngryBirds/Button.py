@@ -1,6 +1,8 @@
 import pygame as py
 import utils
 
+#Classe que representa un botó de la UI
+
 class Button:
     def __init__ (self, sprite, left, top, width, height):
         self.sprite = py.transform.scale(sprite, (width, height))

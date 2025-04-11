@@ -4,6 +4,8 @@ import Box2D as b2
 import utils
 import time
 
+#Classe pare que representa un ocell genèric del joc
+
 class Bird:
     def __init__(self, world:b2.b2World, x:float, y:float, radius:float, images:list[pygame.Surface]):
         self.radius = radius

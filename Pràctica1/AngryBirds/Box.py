@@ -3,6 +3,8 @@ import Box2D as b2
 import utils
 import time
 
+#Classe que representa una caixa genèrica del joc
+
 class Box:
     def __init__(self, world:b2.b2World, x:float, y:float, w:float, h:float, images:list[pygame.Surface]):
         self.w = w
